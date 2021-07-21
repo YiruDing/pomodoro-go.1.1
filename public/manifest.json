@@ -33,5 +33,6 @@
   "oauth2": {
     "client_id": "811227993938-bdnup0onkbhf33rejoirhia20j2kf51r.apps.googleusercontent.com",
     "scopes": ["https://www.googleapis.com/auth/userinfo.email"]
-  }
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAukRIVX0/Sww6adlBJolVUdOzCnqLfK7o4LNqpYXQE9OAyZa+ZqiiOawQdM6fcExDVnkARnhpGLR3WsgOvZ1pQDb7R25tUFRG81PK+TCKeLN+QOoFtL8SYENhW10FgUduXTksKwB24RY5Yl96n7CDvJeDRrLkX6IagvLO5WrT60qBjDaqc8vGnM4mfJnK8xhzjE+2Uzd1KIIPqtVWlNpK+KWTZ4Tr9c/A1nHgxnMOTROyUTmoyWEHNs5/UcuUPxTAtXgus2rfh7tC5/FJnqi8UJ992d5g9Khx2h827F4NnKTfw4uYpid94ylE2Ax78YB5urD/oSPFosfXfQXguhgKmQIDAQAB"
 }

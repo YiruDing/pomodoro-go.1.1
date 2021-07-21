@@ -107,7 +107,7 @@ const BlockSites = (props) => {
     const siteId = event.target.name.slice(4);
     const toggleSite = props.blockedSites.filter(each => each.id === siteId);
 
-    chrome?.runtime?.sendMessage('jgphbioennmnjogfbpchcgphelmfoiig', {
+    chrome?.runtime?.sendMessage('kaghhmclljbnigfffgjhfbbbcpgenjoi', {
       message: 'toggle-block-or-not',
       toggleSite: toggleSite[0]?.siteUrl
     });

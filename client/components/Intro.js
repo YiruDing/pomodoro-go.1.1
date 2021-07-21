@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Paper } from '@material-ui/core';
+import { Paper, Button } from '@material-ui/core';
 import Typical from 'react-typical';
 
 import TeamProfile from './TeamProfile';
@@ -8,9 +8,9 @@ const Intro = () => {
 
   return (
     <div id='intro-content'>
-      <div className="paper">
-        <div className="lines">
-          <div className="text">
+      <div className='paper'>
+        <div className='lines'>
+          <div className='text'>
             <Typical
               steps={[
                 'Hello there 👋',
@@ -21,7 +21,7 @@ const Intro = () => {
                 3000
               ]}
               loop={2}
-              wrapper="h3"
+              wrapper='h3'
             />
             <Typical
               steps={[
@@ -29,13 +29,16 @@ const Intro = () => {
                 5000,
               ]}
               // loop={3}
-              wrapper="p"
+              wrapper='p'
             />
+            <Button variant='outlined' color='primary' target='_blank' rel='noreferrer' href='https://github.com/2101-Warriors/pomodoro-go'>
+              Link to repo
+            </Button>
           </div>
         </div>
-        <div className="holes hole-top"></div>
-        <div className="holes hole-middle"></div>
-        <div className="holes hole-bottom"></div>
+        <div className='holes hole-top'></div>
+        <div className='holes hole-middle'></div>
+        <div className='holes hole-bottom'></div>
       </div>
       <TeamProfile />
     </div>
