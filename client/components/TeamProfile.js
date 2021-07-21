@@ -60,7 +60,7 @@ const TeamProfile = (props) => {
               McMillan
             </div>
             <div className='links'>
-              <a href='https://github.com/rfmcmillan'>
+              <a target='_blank' rel='noreferrer' href='https://github.com/rfmcmillan'>
                 <GitHubIcon />
               </a>
               <LinkedInIcon />
@@ -76,11 +76,15 @@ const TeamProfile = (props) => {
               Ding
             </div>
             <div className='links'>
-              <a href='https://github.com/YiruDing'>
+              <a target='_blank' rel='noreferrer' href='https://github.com/YiruDing'>
                 <GitHubIcon />
               </a>
-              <LinkedInIcon />
-              <EmailIcon />
+              <a target='_blank' rel='noreferrer' href='https://www.linkedin.com/in/yiru-ding/'>
+                <LinkedInIcon />
+              </a>
+              <a href=''>
+                <EmailIcon />
+              </a>
             </div>
           </div>
         )}
@@ -92,7 +96,7 @@ const TeamProfile = (props) => {
               Alas
             </div>
             <div className='links'>
-              <a href='https://github.com/stephanalas'>
+              <a target='_blank' rel='noreferrer' href='https://github.com/stephanalas'>
                 <GitHubIcon />
               </a>
               <LinkedInIcon />
@@ -108,7 +112,7 @@ const TeamProfile = (props) => {
               Wu
             </div>
             <div className='links'>
-              <a href='https://github.com/felicityandherdragon'>
+              <a target='_blank' rel='noreferrer' href='https://github.com/felicityandherdragon'>
                 <GitHubIcon />
               </a>
               <LinkedInIcon />

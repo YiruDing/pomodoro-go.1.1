@@ -35,7 +35,7 @@ class Routes extends Component {
       await this.props.getSites(this.props.auth.id);
     }
 
-    chrome?.runtime?.sendMessage('jgphbioennmnjogfbpchcgphelmfoiig', {
+    chrome?.runtime?.sendMessage('kaghhmclljbnigfffgjhfbbbcpgenjoi', {
       message: 'set-blocked-sites',
       blockedSites: this.props.blockedSites.filter((each) => {
         return each.blacklist.blockingEnabled === true;
