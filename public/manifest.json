@@ -1,0 +1,38 @@
+{
+  "name": "Pomdoro-Go",
+  "description": "Pomodoro, go! Inspired by the Pomdoro technique, also known as tomato timer, Pomdoro-Go is an app that helps boost productivity by blocking social media, setting timers and creating focus sessions. Share what you've achieved with your friends, and make work a more interesting experience! ",
+  "version": "1.0",
+  "manifest_version": 3,
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "icons": {
+    "128": "pngegg.png"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "alarms",
+    "notifications",
+    "unlimitedStorage",
+    "scripting",
+    "http://*/",
+    "https://*/",
+    "<URL>"
+  ],
+  "host_permissions": ["http://*/", "https://*/"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "externally_connectable": {
+    "matches": ["*://pomodoro-go-2101.herokuapp.com/*", "*://localhost/*"]
+  },
+  "oauth2": {
+    "client_id": "811227993938-bdnup0onkbhf33rejoirhia20j2kf51r.apps.googleusercontent.com",
+    "scopes": ["https://www.googleapis.com/auth/userinfo.email"]
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAukRIVX0/Sww6adlBJolVUdOzCnqLfK7o4LNqpYXQE9OAyZa+ZqiiOawQdM6fcExDVnkARnhpGLR3WsgOvZ1pQDb7R25tUFRG81PK+TCKeLN+QOoFtL8SYENhW10FgUduXTksKwB24RY5Yl96n7CDvJeDRrLkX6IagvLO5WrT60qBjDaqc8vGnM4mfJnK8xhzjE+2Uzd1KIIPqtVWlNpK+KWTZ4Tr9c/A1nHgxnMOTROyUTmoyWEHNs5/UcuUPxTAtXgus2rfh7tC5/FJnqi8UJ992d5g9Khx2h827F4NnKTfw4uYpid94ylE2Ax78YB5urD/oSPFosfXfQXguhgKmQIDAQAB"
+}
