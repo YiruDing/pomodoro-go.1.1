@@ -4,7 +4,6 @@ const path = require('path');
 const morgan = require('morgan');
 const app = express();
 const cors = require('cors');
-const history = require('connect-history-api-fallback');
 
 module.exports = app;
 
@@ -16,7 +15,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(history());
 
 // auth and api routes
 app.use('/auth', require('./auth'));

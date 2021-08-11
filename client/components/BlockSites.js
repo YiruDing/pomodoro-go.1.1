@@ -63,7 +63,7 @@ const LightGreenButton = withStyles((theme) => ({
 const useStyles = makeStyles({
   root: {
     maxWidth: 500,
-    margin: '5px',
+    margin: '20px',
   },
   form: {
     maxWidth: 600,
