@@ -8,7 +8,7 @@ const PauseButton = (props) => {
       <Button
         onClick={(ev) => {
           setShowStart(true);
-          chrome.runtime.sendMessage('opechfjocpfdfihnebpmdbkajmmomihl', {
+          chrome.runtime.sendMessage('kaghhmclljbnigfffgjhfbbbcpgenjoi', {
             message: 'stop-timer',
             pause: true,
           });

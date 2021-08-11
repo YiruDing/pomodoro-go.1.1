@@ -3,7 +3,7 @@ window.onbeforeunload = () => {
   const currentSession = JSON.parse(localStorage.getItem('currentSession'));
   if (!currentSession) throw Error('No current session');
   else {
-    chrome.runtime.sendMessage('opechfjocpfdfihnebpmdbkajmmomihl', {
+    chrome.runtime.sendMessage('kaghhmclljbnigfffgjhfbbbcpgenjoi', {
       message: 'store-session-data',
       sessionData: {
         sessionId: currentSession.id,

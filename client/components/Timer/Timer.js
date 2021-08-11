@@ -55,7 +55,7 @@ const Timer = (props) => {
       // starts session
       setShowStart(false);
       setSessionActive(true);
-      chrome.runtime.sendMessage('opechfjocpfdfihnebpmdbkajmmomihl', {
+      chrome.runtime.sendMessage('kaghhmclljbnigfffgjhfbbbcpgenjoi', {
         message: 'timer',
         time: sessionTime,
         action: 'create-timer',
@@ -69,7 +69,7 @@ const Timer = (props) => {
         });
       }, 1000);
       localStorage.setItem('sessionActive', true);
-      chrome.runtime.sendMessage('opechfjocpfdfihnebpmdbkajmmomihl', {
+      chrome.runtime.sendMessage('kaghhmclljbnigfffgjhfbbbcpgenjoi', {
         message: 'create-timer',
         time: sessionTime,
       });
@@ -103,7 +103,7 @@ const Timer = (props) => {
 
   useEffect(() => {
     chrome.runtime.sendMessage(
-      'opechfjocpfdfihnebpmdbkajmmomihl',
+      'kaghhmclljbnigfffgjhfbbbcpgenjoi',
       {
         message: 'get-time',
       },

@@ -49,7 +49,7 @@ export default connect(null, (dispatch) => {
   const handleStop = (ev) => {
     handleClose();
     props.endSession(currentSession.id);
-    chrome.runtime.sendMessage('opechfjocpfdfihnebpmdbkajmmomihl', {
+    chrome.runtime.sendMessage('kaghhmclljbnigfffgjhfbbbcpgenjoi', {
       message: 'timer',
       action: 'stop-timer',
       pause: false,

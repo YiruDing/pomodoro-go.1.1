@@ -117,7 +117,7 @@ export const endSession =
           successful,
         });
       }
-      chrome.runtime.sendMessage('opechfjocpfdfihnebpmdbkajmmomihl', {
+      chrome.runtime.sendMessage('kaghhmclljbnigfffgjhfbbbcpgenjoi', {
         message: 'stop-timer',
       });
 
