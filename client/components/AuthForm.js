@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import { authenticate } from '../store';
+import { authenticate, resetPassword } from '../store';
 import {
   TextField,
   Button,
@@ -14,15 +14,19 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   login: {
     padding: 10,
-    minWidth: 100,
+    // minWidth: 100,
     flexGrow: 1,
-    width: '20vw',
-    position: 'fixed',
-    right: '39vw',
-    top: '30vh',
+    // width: '25%',
+    width: '25rem',
+    marginTop: '10rem',
   },
   item: {
-    width: 200
+    // width: '80%',
+  },
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 }));
 
@@ -55,12 +59,15 @@ const AuthForm = (props) => {
     }
     dispatch(authenticate(username, email, password, formName));
   };
-
-  return (
-    <div>
-      {/* script for google OAuth */}
-      <form id='login' onSubmit={handleSubmit} name={name} value={value}>
-        {name === 'signup' ? (
+  const handleReset = (ev) => {
+    ev.preventDefault();
+    dispatch(resetPassword(email));
+  };
+  if (name === 'signup') {
+    return (
+      <div className={classes.container}>
+        {/* script for google OAuth */}
+        <form id="login" name={name} value={value}>
           <Paper className={classes.login}>
             <Grid container direction="column" alignItems="center">
               <Typography
@@ -68,7 +75,7 @@ const AuthForm = (props) => {
                   marginBottom: '20px',
                 }}
               >
-                Sign Up for an Account
+                {'Sign Up for an Account'}
               </Typography>
               <TextField
                 id="username"
@@ -129,7 +136,7 @@ const AuthForm = (props) => {
                   <Typography variant="caption">
                     Already have an account?
                     {`
-              `}
+            `}
                   </Typography>
                   <Link variant="caption" href={`${process.env.API_URL}/login`}>
                     Log in
@@ -138,10 +145,24 @@ const AuthForm = (props) => {
               </Grid>
             </Grid>
           </Paper>
-        ) : (
+          {error && error.response && <div> {error.response.data} </div>}
+        </form>
+      </div>
+    );
+  } else if (name === 'login') {
+    return (
+      <div className={classes.container}>
+        {/* script for google OAuth */}
+        <form id="login" name={name} value={value}>
           <Paper className={classes.login}>
             <Grid container direction="column" alignItems="center">
-              <Typography>Log In to Your Account</Typography>
+              <Typography
+                style={{
+                  paddingBottom: '15px',
+                }}
+              >
+                Log In to Your Account
+              </Typography>
               <Grid item>
                 <TextField
                   id="email"
@@ -169,8 +190,8 @@ const AuthForm = (props) => {
               </Grid>
               <Grid item>
                 <Button
-                  onClick={handleSubmit}
                   id="submit"
+                  onClick={handleSubmit}
                   variant="contained"
                   type="submit"
                   value={value}
@@ -186,36 +207,91 @@ const AuthForm = (props) => {
                 </Button>
               </Grid>
               <Grid item>
-                <Grid item>
+                <Grid
+                  item
+                  container
+                  alignItems="center"
+                  direction="column"
+                  style={{
+                    paddingTop: 10,
+                  }}
+                >
                   <Typography variant="caption">
-                    Need an account?
-                    {`
-            `}
+                    Need an account?{' '}
+                    <Link
+                      variant="caption"
+                      href={`${process.env.API_URL}/signup`}
+                    >
+                      Sign up
+                    </Link>
                   </Typography>
-                  <Link
-                    variant="caption"
-                    href={`${process.env.API_URL}/signup`}
-                  >
-                    Sign up
-                  </Link>
+                  <Typography variant="caption">
+                    Forgot Password?{' '}
+                    <Link
+                      variant="caption"
+                      href={`${process.env.API_URL}/sendPasswordReset`}
+                    >
+                      Reset Password
+                    </Link>
+                  </Typography>
                 </Grid>
               </Grid>
             </Grid>
           </Paper>
-        )}
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-    </div>
-  );
+          {error && error.response && <div> {error.response.data} </div>}
+        </form>
+      </div>
+    );
+  } else
+    return (
+      <div className={classes.container}>
+        {/* script for google OAuth */}
+        <form
+          id="reset-passowrd"
+          onSubmit={handleReset}
+          name={name}
+          value={value}
+        >
+          <Paper className={classes.login}>
+            <Grid container direction="column" alignItems="center">
+              <Typography>Enter e-mail to reset password</Typography>
+              <Grid item>
+                <TextField
+                  id="email"
+                  label="E-mail"
+                  name="email"
+                  value={email}
+                  onChange={onChange}
+                  variant="outlined"
+                  className={classes.item}
+                  size="small"
+                />
+              </Grid>
+              <Grid item>
+                <Button
+                  id="submit"
+                  variant="contained"
+                  type="submit"
+                  value={value}
+                  color="primary"
+                  style={{
+                    backgroundColor: '#5061a9',
+                    color: 'white',
+                    marginTop: '10px',
+                  }}
+                  className={classes.item}
+                >
+                  {displayName}
+                </Button>
+              </Grid>
+            </Grid>
+          </Paper>
+          {error && error.response && <div> {error.response.data} </div>}
+        </form>
+      </div>
+    );
 };
 
-/**
- * CONTAINER
- *   Note that we have two different sets of 'mapStateToProps' functions -
- *   one for Login, and one for Signup. However, they share the same 'mapDispatchToProps'
- *   function, and share the same Component. This is a good example of how we
- *   can stay DRY with interfaces that are very similar to each other!
- */
 const mapLogin = (state) => {
   return {
     name: 'login',
@@ -232,5 +308,14 @@ const mapSignup = (state) => {
   };
 };
 
+const mapResetPassword = (state) => {
+  return {
+    name: 'resetPassword',
+    displayName: 'Reset Password',
+    error: state.auth.error,
+  };
+};
 export const Login = connect(mapLogin)(AuthForm);
 export const Signup = connect(mapSignup)(AuthForm);
+
+export const ResetPassword = connect(mapResetPassword)(AuthForm);

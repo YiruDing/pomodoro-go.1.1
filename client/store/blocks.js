@@ -1,4 +1,4 @@
-import axios from 'axios';
+import customAxios from './customAxios';
 const LOAD_BLOCKS = 'LOAD_BLOCKS';
 const loadBlocksActionCreator = (blocks) => {
   return {
@@ -10,7 +10,7 @@ const loadBlocksActionCreator = (blocks) => {
 const loadBlocks = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${process.env.API_URL}/api/blocks`);
+      const response = await customAxios.get(`blocks`);
       const blocks = response.data;
       dispatch(loadBlocksActionCreator(blocks));
     } catch (error) {
@@ -22,7 +22,7 @@ const loadBlocks = () => {
 
 //CREATE BLOCK
 
-const CREATE_BLOCK= 'CREATE_BLOCK';
+const CREATE_BLOCK = 'CREATE_BLOCK';
 
 const createBlockActionCreator = (block) => {
   return {
@@ -32,7 +32,7 @@ const createBlockActionCreator = (block) => {
 };
 const createBlock = (userId, siteId) => async (dispatch) => {
   try {
-    const response = await axios.post(`${process.env.API_URL}/api/blocks`, {
+    const response = await customAxios.post(`blocks`, {
       userId,
       siteId,
     });

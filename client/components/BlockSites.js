@@ -23,7 +23,12 @@ import MuiAlert from '@material-ui/lab/Alert';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { Paper } from '@material-ui/core';
-import { getSites, addSite, deleteSite, updateBlocking } from '../store/blockSites';
+import {
+  getSites,
+  addSite,
+  deleteSite,
+  updateBlocking,
+} from '../store/blockSites';
 
 // material-ui style definitions
 const LightGreenSwitch = withStyles({
@@ -63,7 +68,7 @@ const useStyles = makeStyles({
   form: {
     maxWidth: 600,
     marginTop: '10px',
-    marginBottom: '5px',
+    marginBottom: '40px',
     display: 'flex',
     justifyContent: 'space-around',
   },
@@ -75,7 +80,7 @@ const useStyles = makeStyles({
   button: {
     height: 55,
     marginRight: '30px',
-    marginLeft: '10px'
+    marginLeft: '10px',
   },
 });
 //
@@ -102,14 +107,35 @@ const BlockSites = (props) => {
     props.getSites(props.auth.id);
   }, []);
 
+  const [state, setState] = useState({
+    mobileView: false,
+    drawerOpen: false,
+  });
+  const { mobileView, drawerOpen } = state;
+
+  useEffect(() => {
+    const setResponsiveness = () => {
+      return window.innerWidth < 900
+        ? setState((prevState) => ({ ...prevState, mobileView: true }))
+        : setState((prevState) => ({ ...prevState, mobileView: false }));
+    };
+
+    setResponsiveness();
+
+    window.addEventListener('resize', () => setResponsiveness());
+
+    return () => {
+      window.removeEventListener('resize', () => setResponsiveness());
+    };
+  }, []);
   //user interactions > change state, dispatch to store
   const handleChange = (event) => {
     const siteId = event.target.name.slice(4);
-    const toggleSite = props.blockedSites.filter(each => each.id === siteId);
+    const toggleSite = props.blockedSites.filter((each) => each.id === siteId);
 
     chrome?.runtime?.sendMessage('kaghhmclljbnigfffgjhfbbbcpgenjoi', {
       message: 'toggle-block-or-not',
-      toggleSite: toggleSite[0]?.siteUrl
+      toggleSite: toggleSite[0]?.siteUrl,
     });
     props.updateBlocking(props.auth.id, siteId);
   };
@@ -119,11 +145,17 @@ const BlockSites = (props) => {
   };
 
   const paperStyle = {
+    margin: '2.5rem',
+    width: 400,
+    // margin: '30px auto',
     padding: 20,
-    width: 880,
-    margin: '30px auto',
   };
-
+  if (!mobileView) {
+    paperStyle.marginTop = 0;
+    paperStyle.padding = 20;
+    paperStyle.margin = '30px auto';
+    paperStyle.width = 880;
+  }
   return (
     <Paper elevation={10} style={paperStyle}>
       {chrome.storage === undefined ? (
@@ -141,16 +173,28 @@ const BlockSites = (props) => {
           value={urlInput.siteUrl}
           label="URL"
           className={classes.textfield}
-          helperText="Enter URL to block"
+          helperText="Enter URL to block (example: 'www.facebook.com') "
           variant="outlined"
           onChange={(ev) =>
             setUrlInput({ ...urlInput, siteUrl: ev.target.value })
           }
           name="siteUrl"
         />
-        <FormControl variant="outlined">
-          <InputLabel id="category-label">Category</InputLabel>
+        <FormControl
+          style={{
+            width: 200,
+          }}
+        >
+          <InputLabel
+            style={{
+              paddingLeft: 20,
+            }}
+            id="category-label"
+          >
+            Category
+          </InputLabel>
           <Select
+            variant="outlined"
             labelId="category-label"
             id="category"
             name="category"
@@ -177,9 +221,6 @@ const BlockSites = (props) => {
           Add
         </LightGreenButton>
       </form>
-      <Typography variant="h5" gutterBottom>
-        Sites you already blocked
-      </Typography>
       <div id="currBlocked">
         {props.blockedSites.length > 0 &&
           props.blockedSites.map((each, idx) => {
@@ -195,9 +236,7 @@ const BlockSites = (props) => {
                   <FormControlLabel
                     control={
                       <LightGreenSwitch
-                        checked={
-                          each.blacklist?.blockingEnabled
-                        }
+                        checked={each.blacklist?.blockingEnabled}
                         onChange={handleChange}
                         name={`item${each.id}`}
                       />
@@ -240,7 +279,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     updateBlocking: (userId, siteId) => {
       dispatch(updateBlocking(userId, siteId));
-    }
+    },
   };
 };
 

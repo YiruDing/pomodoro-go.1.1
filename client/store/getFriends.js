@@ -1,14 +1,11 @@
-import axios from 'axios';
-
+import customAxios from './customAxios';
 const GET_MY_REQUEST_TO_OTHERS = 'GET_MY_REQUEST_TO_OTHERS';
 const GET_REQUEST_TO_ME = 'GET_REQUEST_TO_ME';
 
 const getMyRequestToOthers = (userId) => {
   return async (dispatch) => {
     try {
-      const currentUser = (
-        await axios.get(`${process.env.API_URL}/api/users/${userId}`)
-      ).data;
+      const currentUser = (await customAxios.get(`users/${userId}`)).data;
       const myRequests = currentUser.requester; //get where current user is the requester of friends requests
       dispatch(_getMyRequestToOthers(myRequests));
     } catch (err) {
@@ -27,9 +24,7 @@ const _getMyRequestToOthers = (myRequests) => {
 const getRequestsToMe = (userId) => {
   return async (dispatch) => {
     try {
-      const currentUser = (
-        await axios.get(`${process.env.API_URL}/api/users/${userId}`)
-      ).data;
+      const currentUser = (await customAxios.get(`users/${userId}`)).data;
       const requestsToMe = currentUser.requestee; //get where current user is the requester of friends requests
       dispatch(_getRequestsToMe(requestsToMe));
     } catch (err) {

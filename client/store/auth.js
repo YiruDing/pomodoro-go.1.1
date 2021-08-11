@@ -1,7 +1,8 @@
 import axios from 'axios';
 import history from '../history';
 import socketIOClient from 'socket.io-client';
-
+import { removeSession } from './sessions';
+// comment
 const ENDPOINT = process.env.API_URL;
 export const socket = socketIOClient(ENDPOINT);
 
@@ -26,6 +27,7 @@ const setAuth = (auth) => ({ type: SET_AUTH, auth });
 export const me = () => async (dispatch) => {
   const token = window.localStorage.getItem(TOKEN);
   if (token) {
+    console.log(process.env.API_URL);
     const res = await axios.get(`${process.env.API_URL}/auth/me`, {
       headers: {
         authorization: token,
@@ -65,6 +67,16 @@ export const authenticate =
     }
   };
 
+export const resetPassword = (email) => async (dispatch) => {
+  try {
+    const res = await axios.post(`${process.env.API_URL}/auth/forgotPassword`, {
+      email,
+    });
+  } catch (authError) {
+    return dispatch(setAuth({ error: authError }));
+  }
+};
+
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
   window.localStorage.removeItem('user');
@@ -72,6 +84,7 @@ export const logout = () => {
   window.localStorage.removeItem(SPOTIFY_ACCESS_TOKEN);
   window.localStorage.removeItem(SPOTIFY_REFRESH_TOKEN);
   window.localStorage.removeItem(NEW_SPOTIFY_DEVICE);
+
   history.push('/login');
   return {
     type: SET_AUTH,

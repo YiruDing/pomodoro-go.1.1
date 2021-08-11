@@ -1,4 +1,5 @@
 import axios from 'axios';
+import customAxios from './customAxios';
 const LOAD_BLACKLIST = 'LOAD_BLACKLIST';
 const loadBlackListActionCreator = (blackList) => {
   return {
@@ -10,7 +11,7 @@ const loadBlackListActionCreator = (blackList) => {
 const loadBlackList = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${process.env.API_URL}/api/blackList`);
+      const response = await customAxios.get(`blackList`);
       const blackList = response.data;
       dispatch(loadBlackListActionCreator(blackList));
     } catch (error) {
@@ -32,8 +33,8 @@ const updateBlackListActionCreator = (blackList) => {
 const updateBlackList = (blackListId, blackListInfo) => {
   console.log('blackListInfo:', blackListInfo);
   return async (dispatch) => {
-    const response = await axios.put(
-      `${process.env.API_URL}/api/blackList/${blackListId}`,
+    const response = await customAxios.put(
+      `blackList/${blackListId}`,
       blackListInfo
     );
 

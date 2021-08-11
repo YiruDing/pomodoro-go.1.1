@@ -1,12 +1,10 @@
-import axios from 'axios';
-
+import customAxios from './customAxios';
 const GET_ALL_USERS = 'GET_ALL_USERS';
 
 export const getAllUsers = () => {
   return async (dispatch) => {
     try {
-      const allUsers = (await axios.get(`${process.env.API_URL}/api/users`))
-        .data;
+      const allUsers = (await customAxios.get(`users`)).data;
       dispatch(_getAllUsers(allUsers));
     } catch (err) {
       console.log(err);

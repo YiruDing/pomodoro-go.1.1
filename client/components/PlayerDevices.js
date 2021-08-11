@@ -26,9 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 const PlayerDevices = (props) => {
   const classes = useStyles();
-  // const theme = useTheme();
 
-  console.log(props);
   // const [devices, setDevices] = useState('');
 
   const transferDevice = async (deviceId) => {
@@ -54,26 +52,38 @@ const PlayerDevices = (props) => {
         window.localStorage.setItem('new-spotify-device', '');
         const player = new Spotify.Player({
           name: 'Pomodoro-go Spotify Player',
-          getOAuthToken: cb => { cb(token); }
+          getOAuthToken: (cb) => {
+            cb(token);
+          },
         });
-
         // Error handling
-        player.addListener('initialization_error', ({ message }) => { console.error(message); });
+        player.addListener('initialization_error', ({ message }) => {
+          console.error(message);
+        });
         player.addListener('authentication_error', ({ message }) => {
           console.error(message);
           window.localStorage.removeItem('spotify_access_token');
           window.localStorage.removeItem('spotify_refresh_token');
           window.localStorage.removeItem('new-spotify-device');
         });
-        player.addListener('account_error', ({ message }) => { console.error(message); });
-        player.addListener('playback_error', ({ message }) => { console.error(message); });
+        player.addListener('account_error', ({ message }) => {
+          console.error(message);
+        });
+        player.addListener('playback_error', ({ message }) => {
+          console.error(message);
+        });
 
         // Playback status updates
-        player.addListener('player_state_changed', state => {
+        player.addListener('player_state_changed', (state) => {
           console.log(state);
           if (state) {
-            window.localStorage.setItem('spotify_current_track', state.track_window.current_track.id);
-            props.getCurrPlayback(window.localStorage.getItem('spotify_access_token'));
+            window.localStorage.setItem(
+              'spotify_current_track',
+              state.track_window.current_track.id
+            );
+            props.getCurrPlayback(
+              window.localStorage.getItem('spotify_access_token')
+            );
           }
         });
 
@@ -93,12 +103,11 @@ const PlayerDevices = (props) => {
 
         // Connect to the player!
         player.connect();
-      };
+      }
     };
     props.getDevices(window.localStorage.getItem('spotify_access_token'));
     props.getCurrPlayback(window.localStorage.getItem('spotify_access_token'));
-  },[]);
-
+  }, []);
 
   return (
     <div id="device-list">
@@ -106,24 +115,27 @@ const PlayerDevices = (props) => {
         subheader={<ListSubheader>Available devices</ListSubheader>}
         className={classes.deviceList}
       >
-        {props.devices.devices ? props.devices.devices.map((each) => {
-          return (
-            <ListItem key={each.id} className={classes.deviceItem}>
-              <ListItemText id="device-name" primary={each.name} />
-              <ListItemSecondaryAction>
-                {props.currPlayback.device && props.currPlayback.device.id === each.id ? (
-                  <MusicNoteIcon />
-                ) : (
-                  <Tooltip title="Play on this device" placement="top">
-                    <PlayArrowOutlinedIcon
-                      onClick={() => transferDevice(each.id)}
-                    />
-                  </Tooltip>
-                )}
-              </ListItemSecondaryAction>
-            </ListItem>
-          );
-        }) : (
+        {props.devices.devices ? (
+          props.devices.devices.map((each) => {
+            return (
+              <ListItem key={each.id} className={classes.deviceItem}>
+                <ListItemText id="device-name" primary={each.name} />
+                <ListItemSecondaryAction>
+                  {props.currPlayback.device &&
+                  props.currPlayback.device.id === each.id ? (
+                    <MusicNoteIcon />
+                  ) : (
+                    <Tooltip title="Play on this device" placement="top">
+                      <PlayArrowOutlinedIcon
+                        onClick={() => transferDevice(each.id)}
+                      />
+                    </Tooltip>
+                  )}
+                </ListItemSecondaryAction>
+              </ListItem>
+            );
+          })
+        ) : (
           <div>cannot find device info</div>
         )}
       </List>
@@ -134,7 +146,7 @@ const PlayerDevices = (props) => {
 const mapStateToProps = (state) => {
   return {
     devices: state.devices,
-    currPlayback: state.currPlayback
+    currPlayback: state.currPlayback,
   };
 };
 
@@ -149,4 +161,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(PlayerDevices);
+export default connect(mapStateToProps, mapDispatchToProps)(PlayerDevices);

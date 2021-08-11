@@ -13,8 +13,8 @@ const init = async () => {
     const socketServer = new io.Server(server, {
       cors: {
         origin: '*',
-        methods: ['GET', 'POST']
-      }
+        methods: ['GET', 'POST'],
+      },
     });
 
     //sockets

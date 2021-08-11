@@ -15,7 +15,7 @@ import {
   MenuItem,
   Grid,
   FormControlLabel,
-  Checkbox
+  Checkbox,
 } from '@material-ui/core';
 
 const useStyles = makeStyles({
@@ -33,8 +33,6 @@ const useStyles = makeStyles({
   },
 });
 
-
-
 //This component displays either the 'By Day of Week' bar chart or the 'By Goal'
 //bar chart depending on what is selected from the dropdown menu
 const ChartLeft = (props) => {
@@ -44,7 +42,7 @@ const ChartLeft = (props) => {
   const [stacked, setStacked] = useState(false);
 
   const theme = useTheme();
-  const {primary, error, secondary} = theme.palette;
+  const { primary, error, secondary } = theme.palette;
 
   const handleDistributionChange = (event) => {
     setDistribution(event.target.value);
@@ -76,14 +74,13 @@ const ChartLeft = (props) => {
     valsArr.push(val);
   }
 
-
   const data = {
     series: [{ name: 'Sessions', data: valsArr }],
     categories: daysArr,
   };
 
- //Successful Sessions for Stacked Distribution View
-  const sessionsSuccessful = sessions.filter(session => {
+  //Successful Sessions for Stacked Distribution View
+  const sessionsSuccessful = sessions.filter((session) => {
     return session.successful === true;
   });
   const sessionDaysSuccessful = sessionsSuccessful.map((session) => {
@@ -91,14 +88,20 @@ const ChartLeft = (props) => {
     return dayOfWeek;
   });
 
-
-  const distDaysSuccessful = { Sun: 0, Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0 };
+  const distDaysSuccessful = {
+    Sun: 0,
+    Mon: 0,
+    Tue: 0,
+    Wed: 0,
+    Thu: 0,
+    Fri: 0,
+    Sat: 0,
+  };
   if (sessionsSuccessful.length) {
     for (let i = 0; i < sessionDaysSuccessful.length; i++) {
       distDaysSuccessful[sessionDaysSuccessful[i]]++;
     }
   }
-
 
   let valsArrSuccessful = [];
   for (const [key, val] of Object.entries(distDaysSuccessful)) {
@@ -106,7 +109,7 @@ const ChartLeft = (props) => {
   }
 
   //Failed Sessions for Stacked Distribution View
-  const sessionsFailed = sessions.filter(session => {
+  const sessionsFailed = sessions.filter((session) => {
     return session.successful === false;
   });
   const sessionDaysFailed = sessionsFailed.map((session) => {
@@ -114,14 +117,20 @@ const ChartLeft = (props) => {
     return dayOfWeek;
   });
 
-
-  const distDaysFailed = { Sun: 0, Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0 };
+  const distDaysFailed = {
+    Sun: 0,
+    Mon: 0,
+    Tue: 0,
+    Wed: 0,
+    Thu: 0,
+    Fri: 0,
+    Sat: 0,
+  };
   if (sessionsFailed.length) {
     for (let i = 0; i < sessionDaysFailed.length; i++) {
       distDaysFailed[sessionDaysFailed[i]]++;
     }
   }
-
 
   let valsArrFailed = [];
   for (const [key, val] of Object.entries(distDaysFailed)) {
@@ -138,7 +147,6 @@ const ChartLeft = (props) => {
         name: 'Successful',
         data: valsArrSuccessful,
       },
-
     ],
   };
 
@@ -151,7 +159,7 @@ const ChartLeft = (props) => {
           show: true,
         },
       },
-      colors: stacked ? [secondary.main, primary.main ]: [primary.main],
+      colors: stacked ? [secondary.main, primary.main] : [primary.main],
       dataLabels: {
         enabled: false,
       },
@@ -353,7 +361,6 @@ const ChartLeft = (props) => {
     }
   }
 
-
   let hourValsArrFailed = [];
   for (const [key, val] of Object.entries(distHoursFailed)) {
     hourValsArrFailed.push(val);
@@ -369,7 +376,6 @@ const ChartLeft = (props) => {
         name: 'Successful',
         data: hourValsArrSuccessful,
       },
-
     ],
   };
 
@@ -382,7 +388,7 @@ const ChartLeft = (props) => {
           show: true,
         },
       },
-      colors: stacked ? [secondary.main, primary.main ]: [primary.main],
+      colors: stacked ? [secondary.main, primary.main] : [primary.main],
       dataLabels: {
         enabled: false,
       },
@@ -555,8 +561,6 @@ const ChartLeft = (props) => {
     goalValsArrFailed.push(val);
   }
 
-
-
   const stackedDataGoals = {
     series: [
       {
@@ -567,7 +571,6 @@ const ChartLeft = (props) => {
         name: 'Successful',
         data: goalValsArrSuccessful,
       },
-
     ],
   };
 
@@ -580,7 +583,7 @@ const ChartLeft = (props) => {
           show: true,
         },
       },
-      colors: stacked ? [secondary.main, primary.main]: [primary.main],
+      colors: stacked ? [secondary.main, primary.main] : [primary.main],
       dataLabels: {
         enabled: false,
       },
@@ -650,7 +653,7 @@ const ChartLeft = (props) => {
         // },
       },
     },
-    series: stacked ? stackedDataGoals.series :goalData.series,
+    series: stacked ? stackedDataGoals.series : goalData.series,
   };
 
   return (

@@ -11,12 +11,13 @@ const useStyles = makeStyles(() => ({
 
 const TimerInput = (props) => {
   const classes = useStyles();
-  const { goal, sessionTime, setSessionTime } = useContext(SessionContext);
+  const { goal } = useContext(SessionContext);
   const currentSession = useSelector((state) => state.currentSession);
   const [inputError, setInputError] = useState(false);
   const { label } = props;
 
   const handleChange = (ev) => {
+    // checking for error
     setInputError(false);
     const value = parseInt(ev.target.value);
     if (!value) {
@@ -27,11 +28,10 @@ const TimerInput = (props) => {
       setInputError(true);
       return;
     }
-    props.setTime(parseInt(value));
+    props.setTime(value);
   };
 
   return (
-    // <Grid item xs={4}>
     <TextField
       label={label}
       InputLabelProps={{
@@ -48,7 +48,6 @@ const TimerInput = (props) => {
       type="number"
       inputProps={{ maxLength: 2 }}
     ></TextField>
-    // </Grid>
   );
 };
 

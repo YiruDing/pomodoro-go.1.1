@@ -1,82 +1,38 @@
-import { Button, makeStyles, Typography } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-
-const useStyles = makeStyles(() => ({
-  view: {
-    display: 'flex',
-  },
-  tens: {
-    display: 'flex',
-    flexFlow: 'column',
-    justifyContent: 'center',
-  },
-  ones: {
-    display: 'flex',
-    flexFlow: 'column',
-    justifyContent: 'center',
-  },
-  button: {},
-  timeSection: {
-    display: 'flex',
-    flexFlow: 'column',
-    alignItems: 'center',
-  },
-}));
+import { Grid, Typography } from '@material-ui/core';
+import React, { useContext, useEffect, useState } from 'react';
+import { SessionContext } from '../../app';
 
 const TimeDisplay = (props) => {
-  const classes = useStyles();
-  const { setTime, time } = props;
-  const incrementByTen = () => {
-    setTime(time + 10);
-    console.log(time);
-  };
-  const increment = () => {
-    setTime(time + 1);
-  };
-  const decrementByTen = () => {
-    setTime(time - 10);
-  };
-  const decrement = () => {
-    setTime(time - 1);
-  };
-  let stringTime = time + '' || '';
-  return (
-    <div className={classes.timeSection}>
-      <Typography>{props.label}</Typography>
-      <div className={classes.view}>
-        <div className={classes.tens}>
-          <Button
-            onClick={incrementByTen}
-            size="small"
-            className={classes.button}
-          >
-            +
-          </Button>
-          <Typography align="center">
-            {stringTime.length !== 1 ? stringTime[0] : '0'}
-          </Typography>
-          <Button
-            size="small"
-            onClick={decrementByTen}
-            className={classes.button}
-          >
-            -
-          </Button>
-        </div>
+  const { sessionTime } = useContext(SessionContext);
+  let seconds;
+  const msToHMS = (ms) => {
+    seconds = ms / 1000;
 
-        <div className={classes.ones}>
-          <Button size="small" onClick={increment} className={classes.button}>
-            +
-          </Button>
-          <Typography align="center">
-            {stringTime.length !== 1 ? stringTime[1] : time}
-          </Typography>
-          <Button size="small" onClick={decrement} className={classes.button}>
-            -
-          </Button>
-        </div>
-      </div>
-    </div>
+    let hours = parseInt(seconds / 3600);
+    seconds = seconds % 3600;
+
+    let minutes = parseInt(seconds / 60);
+    seconds = seconds % 60;
+
+    hours = hours < 10 ? '0' + hours : hours;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? (seconds >= 0 ? '0' + seconds : '00') : seconds;
+    return hours + ':' + minutes + ':' + seconds;
+  };
+
+  return (
+    <Grid item>
+      <Typography
+        variant="h1"
+        style={{
+          position: 'relative',
+          top: '185px',
+          fontSize: '100px',
+        }}
+      >
+        {msToHMS(sessionTime)}{' '}
+      </Typography>
+    </Grid>
   );
 };
 

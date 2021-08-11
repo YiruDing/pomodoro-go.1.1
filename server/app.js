@@ -4,6 +4,7 @@ const path = require('path');
 const morgan = require('morgan');
 const app = express();
 const cors = require('cors');
+const history = require('connect-history-api-fallback');
 
 module.exports = app;
 
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(history());
 
 // auth and api routes
 app.use('/auth', require('./auth'));
@@ -22,7 +24,7 @@ app.use('/api', require('./api'));
 app.use('/google', require('./google'));
 app.use('/callback', require('./callback'));
 app.use('/spotifyconnect', require('./spotifyconnect'));
-
+app.use('/resetPassword', express.static(path.join(__dirname, '..', 'public')));
 app.get('/', (req, res) =>
   res.sendFile(path.join(__dirname, '..', 'public/index.html'))
 );
@@ -43,6 +45,7 @@ app.use((req, res, next) => {
 
 // sends index.html
 app.use('*', (req, res) => {
+  console.log(__dirname);
   res.sendFile(path.join(__dirname, '..', 'public/index.html'));
 });
 

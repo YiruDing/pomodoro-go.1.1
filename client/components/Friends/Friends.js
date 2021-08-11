@@ -15,7 +15,7 @@ import { Paper, Tabs, Tab } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: '950px',
+    width: '75%',
     margin: '20px auto 20px auto',
     padding: 20,
     minHeight: 450,
@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
   verticalTabs: {
     borderRight: '1px solid #ccb8b8',
+    paddingRight: '15px',
     width: '25%',
   },
   tabDetail: {

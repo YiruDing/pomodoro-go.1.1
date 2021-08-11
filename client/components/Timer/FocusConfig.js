@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import TimerInput from './TimerInput';
@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => {
       backgroundColor: 'white',
       height: '100%',
       minHeight: '120px',
-      width:'500px',
+      width: '500px',
       margin: '10px',
       paddingLeft: '10px',
       paddingRight: '10px',
@@ -49,14 +49,40 @@ const useStyles = makeStyles(() => {
 
 const FocusConfig = (props) => {
   const currentSession = useSelector((state) => state.currentSession);
-  const { goal } = useContext(SessionContext);
-  const { hours, minutes, seconds, setHours, setMinutes, setSeconds } =
-    useContext(TimerContext);
+  const {
+    hours,
+    minutes,
+    seconds,
+    setHours,
+    setMinutes,
+    setSeconds,
+    setSessionTime,
+  } = useContext(TimerContext);
   const classes = useStyles();
+  const sessionActive = JSON.parse(localStorage.getItem('sessionActive'));
+
+  useEffect(() => {
+    const convertToMilliseconds = () => {
+      let totalTime = 0;
+      totalTime += seconds * 1000;
+      totalTime += minutes * 60000;
+      totalTime += hours * 3600000;
+      return totalTime;
+    };
+    // should updated everytime input changes, goal selected and when session starts
+    if (!sessionActive && currentSession.status === 'Not Started') {
+      setSessionTime(convertToMilliseconds());
+      localStorage.setItem('sessionTime', convertToMilliseconds());
+    }
+    const session = JSON.parse(localStorage.getItem('currentSession'));
+    if (session?.status === 'Done') {
+      localStorage.setItem('currentSession', null);
+    }
+  }, [seconds, minutes, hours]);
   return (
     <Paper className={classes.container} elevation={10}>
       <Grid
-        justify="center"
+        justifyContent="center"
         item
         container
         xs={12}
@@ -75,7 +101,7 @@ const FocusConfig = (props) => {
             {currentSession.status !== 'Ongoing' ? (
               <GoalSelector className={classes.goal} />
             ) : (
-              <Typography>Goal : {goal}</Typography>
+              <Typography>Goal : {currentSession.goal}</Typography>
             )}
           </Grid>
           <Grid

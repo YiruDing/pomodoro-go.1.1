@@ -28,10 +28,11 @@ const GoalSelector = (props) => {
 
   const handleChange = (ev) => {
     const { value } = ev.target;
+    // once a goal is selected a new session is created
     if (!currentSession.id) {
       createSession(auth.id, value);
     }
-
+    // updates currentSession's goal
     if (currentSession.goal) {
       updateSession(currentSession.id, { goal: value });
     }

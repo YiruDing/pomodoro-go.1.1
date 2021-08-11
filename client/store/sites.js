@@ -1,4 +1,4 @@
-import axios from 'axios';
+import customAxios from './customAxios';
 const LOAD_SITES = 'LOAD_SITES';
 const loadSitesActionCreator = (sites) => {
   return {
@@ -10,7 +10,7 @@ const loadSitesActionCreator = (sites) => {
 const loadSites = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${process.env.API_URL}/api/sites`);
+      const response = await customAxios.get(`sites`);
       const sites = response.data;
       dispatch(loadSitesActionCreator(sites));
     } catch (error) {
@@ -31,10 +31,7 @@ const updateSiteActionCreator = (site) => {
 
 const updateSite = (siteId, siteInfo) => {
   return async (dispatch) => {
-    const response = await axios.put(
-      `${process.env.API_URL}/api/sites/${siteId}`,
-      siteInfo
-    );
+    const response = await customAxios.put(`sites/${siteId}`, siteInfo);
 
     const { data } = response;
     dispatch(updateSiteActionCreator(data));

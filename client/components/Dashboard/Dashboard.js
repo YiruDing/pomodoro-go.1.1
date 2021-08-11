@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
   dashboardContain: {
     paddingLeft: 15,
     paddingRight: 15,
+    paddingTop: 10,
     margin: 10,
   },
   formControlLabel: {
@@ -154,7 +155,7 @@ const Dashboard = () => {
         spacing={3}
       >
         <Grid item xs={3}>
-          <Typography variant="overline" color="textPrimary" >
+          <Typography variant="overline" color="textPrimary">
             Dashboard
           </Typography>
           <Typography variant="h6" color="textPrimary">
@@ -321,7 +322,11 @@ const Dashboard = () => {
           {sessionDistribution ? <ChartLeft sessions={sessions} /> : ''}
         </Grid>
         <Grid item xs={6}>
-          {sessionFrequency ? <ChartRight blocks={blocks} sessions={sessions} sites={sites}/> : ''}
+          {sessionFrequency ? (
+            <ChartRight blocks={blocks} sessions={sessions} sites={sites} />
+          ) : (
+            ''
+          )}
         </Grid>
       </Grid>
     </div>

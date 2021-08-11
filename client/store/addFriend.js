@@ -1,4 +1,4 @@
-import axios from 'axios';
+import customAxios from './customAxios';
 
 const ADD_FRIEND = 'ADD_FRIEND';
 const APPROVE_FRIEND = 'APPROVE_FRIEND';
@@ -7,7 +7,7 @@ const addFriend = (requesterId, requesteeId) => {
   return async (dispatch) => {
     try {
       const newRequest = (
-        await axios.post(`${process.env.API_URL}/api/friendship`, {
+        await customAxios.post(`friendship`, {
           requesterId: requesterId,
           requesteeId: requesteeId,
         })
@@ -30,7 +30,7 @@ const approveFriend = (requesteeId, requesterId) => {
   return async (dispatch) => {
     try {
       const updateRequest = (
-        await axios.put(`${process.env.API_URL}/api/friendship`, {
+        await customAxios.put(`friendship`, {
           requesteeId: requesteeId,
           requesterId: requesterId,
         })

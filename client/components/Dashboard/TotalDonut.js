@@ -1,11 +1,11 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
-import { useTheme} from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 
 const TotalDonut = (props) => {
   const { sessions } = props;
   const theme = useTheme();
-  const {background, primary, secondary} = theme.palette;
+  const { background, primary, secondary } = theme.palette;
 
   let totalExpectedSessionLength;
   if (sessions.length) {

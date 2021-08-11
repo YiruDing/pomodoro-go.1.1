@@ -4,7 +4,6 @@ const { storage, tabs, runtime, alarms, scripting } = chrome;
 const background = {
   active: false,
   currentTab: null,
-  sessionTime: 0,
   appStarted: false,
   getCurrentTab: async function () {
     let queryOptions = { active: true, currentWindow: true };
@@ -19,7 +18,7 @@ const background = {
         alarms.clearAll(() => {
           console.log('alarms are cleared');
         });
-
+        storage.sync.set({ sessionTime: 0 });
         this.listenForAlarm();
         this.listenToExternalMessages();
         this.listenToStorage();
@@ -57,23 +56,51 @@ const background = {
     return runtime.onMessageExternal.addListener(
       async (message, sender, sendResponse) => {
         try {
-          if (message.message === 'create-timer') {
-            this.sessionTime = message.sessionTime;
-            this.createAlarm();
+          if (message.message === 'store-session-data') {
+            console.log('left site', message);
+            const { sessionId } = message.sessionData;
+            await storage.sync.set({ sessionId });
           }
-          if (message.message === 'continue-alarm') {
-            console.log('you want me to start an alarm?');
-            alarms.clearAll(() => {
-              console.log('alarms are cleared again');
-              alarms.create('timer', {
-                when: Date.now() + message.sessionTime,
-              });
-              console.log('new alarm created');
+          if (message.message === 'timer') {
+            if (message.action === 'create-timer') {
+              let sessionTime = message.time;
+
+              var timer = setInterval(() => {
+                sessionTime -= 1000;
+                if (sessionTime <= 0) {
+                  clearInterval(timer);
+
+                  alarms.create('timer', { when: Date.now() });
+                }
+                storage.sync.set({ sessionTime: sessionTime });
+              }, 1000);
+              storage.sync.set({ timer: timer });
+            } else if (message.action === 'stop-timer') {
+              if (!message.pause) storage.sync.set({ sessionTime: 0 });
+              clearInterval(timer);
+            }
+          }
+
+          if (message.message === 'stop-timer') {
+            chrome.alarms.getAll((results) => {
+              console.log(results);
+            });
+            await storage.sync.get(['timer'], async (results) => {
+              clearInterval(results.timer);
+              if (!message.pause) {
+                storage.sync.set({ sessionTime: 0 });
+              }
             });
           }
-          if (message.message === 'timer-done') {
-            console.log('received message');
-            alarms.create('timer', { when: Date.now() });
+          // if (message.message === 'pause-timer') {
+          //   storage.sync.get(['timer'], (results) => {
+          //     clearInterval(results.timer);
+          //   });
+          // }
+          if (message.message === 'get-time') {
+            storage.sync.get(['sessionTime'], (results) => {
+              sendResponse(results);
+            });
           }
           if (message.message === 'set-blocked-sites') {
             const sites = [];
@@ -130,24 +157,19 @@ const background = {
       }
     });
   },
-  listenToTabs: function () {
+  listenToTabs: async function () {
     return tabs.onUpdated.addListener(function (tabId, changeInfo) {
       console.log('listening to tabs, tabID', tabId);
-      chrome.tabs.query({ active: false }, (tabs) => {
-        let tab = tabs.reduce((previous, current) => {
-          return previous.lastAccessed > current.lastAccessed
-            ? previous
-            : current;
-        });
-      });
+
+      // chrome.tabs.query({ active: false }, (tabs) => {
+      //   let tab = tabs.reduce((previous, current) => {
+      //     return previous.lastAccessed > current.lastAccessed
+      //       ? previous
+      //       : current;
+      //   });
+      // });
+
       chrome.storage.sync.get(null, (results) => {
-        const {
-          currentSession,
-          alarmCreated,
-          sessionComplete,
-          sessionTime,
-          timerOn,
-        } = results;
         const url = changeInfo.pendingUrl || changeInfo.url;
         if (!url || !url.startsWith('http')) {
           return;
@@ -174,17 +196,14 @@ const background = {
             };
 
             try {
-              await fetch(
-                'https://pomodoro-go-2101.herokuapp.com/api/blocks',
-                options
-              );
+              await fetch('https://localhost:8080' + '/api/blocks', options);
             } catch (err) {
               console.error('Request failed', err);
             }
 
             chrome.tabs.update(tabId, {
               // url: 'https://pomodoro-go-2101.herokuapp.com/uhoh',
-              url: 'https://pomodoro-go-2101.herokuapp.com/uhoh',
+              url: 'https://pomodoro-go.herokuapp.com/uhoh',
             }); // hard-code it to production url atm instead of 'http://localhost:8080/uhoh'
           }
         });
@@ -218,7 +237,38 @@ const background = {
     });
   },
   listenForAlarm: function () {
-    return chrome.alarms.onAlarm.addListener(function (alarm) {
+    return chrome.alarms.onAlarm.addListener(async function (alarm) {
+      const allTabs = await tabs.query({});
+      console.log(allTabs);
+      let appInTabs = false;
+      allTabs.forEach((tab) => {
+        if (tab.url.includes('pomodoro-go') || tab.url.includes('localhost')) {
+          appInTabs = true;
+        }
+      });
+      if (!appInTabs) {
+        await storage.sync.get(['sessionId', 'authToken'], (results) => {
+          console.log('results', results);
+          const options = {
+            method: 'put',
+            headers: {
+              'Content-type': 'application/json',
+              //     Authorization: results.authToken,
+            },
+            // body: 'successful=true',
+          };
+          fetch(
+            `http://localhost:8080/api/sessions/${results.sessionId}/end`,
+            options
+          )
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+      }
       // notifies the user when the session is over
       chrome.notifications.create(
         undefined,
@@ -229,7 +279,9 @@ const background = {
           iconUrl: 'https://img.icons8.com/android/24/000000/timer.png',
           buttons: [{ title: 'Go to dashboard' }],
         },
-        () => {
+        async () => {
+          await chrome.alarms.clearAll();
+
           console.log('last error: ', chrome.runtime.lastError);
         }
       );
@@ -243,13 +295,12 @@ const background = {
     });
   },
   listenForDashboardRedirect: function () {
-    // THIS BUTTON WORKS BUT DASHBOARD DOES NOT LOAD
     return chrome.notifications.onButtonClicked.addListener(
       async (notificationId, buttonIdx) => {
         // redirects to dashboard after session is complete
         let tab = await this.getCurrentTab();
         chrome.tabs.update(tab.id, {
-          url: 'https://pomodoro-go-2101.herokuapp.com/dashboard',
+          url: 'https://pomodoro-go.herokuapp.com/dashboard',
         });
       }
     );

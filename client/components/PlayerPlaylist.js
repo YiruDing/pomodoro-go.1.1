@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PlayerPlaylist = (props) => {
-  console.log(props);
   const classes = useStyles();
   const accessToken = window.localStorage.getItem('spotify_access_token');
 
@@ -93,16 +92,16 @@ const PlayerPlaylist = (props) => {
         <>
           {props.allPlaylists !== undefined &&
           props.recPlaylists !== undefined ? (
-              <List
-                subheader={<ListSubheader>Playlists</ListSubheader>}
-                className={classes.playLists}
-              >
-                <ListItem button onClick={() => handleClick('my-playlist')}>
-                  <ListItemText primary="My playlists" />
-                  {open['my-playlist'] ? <ExpandLess /> : <ExpandMore />}
-                </ListItem>
-                <Collapse in={open['my-playlist']} timeout="auto" unmountOnExit>
-                  {props.allPlaylists.items &&
+            <List
+              subheader={<ListSubheader>Playlists</ListSubheader>}
+              className={classes.playLists}
+            >
+              <ListItem button onClick={() => handleClick('my-playlist')}>
+                <ListItemText primary="My playlists" />
+                {open['my-playlist'] ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse in={open['my-playlist']} timeout="auto" unmountOnExit>
+                {props.allPlaylists.items &&
                   props.allPlaylists.items.length > 0 &&
                   props.allPlaylists.items.map((each) => {
                     return (
@@ -123,13 +122,13 @@ const PlayerPlaylist = (props) => {
                       </ListItem>
                     );
                   })}
-                </Collapse>
-                <ListItem button onClick={() => handleClick('rec-playlist')}>
-                  <ListItemText primary="🌟 Our recommendation" />
-                  {open['rec-playlist'] ? <ExpandLess /> : <ExpandMore />}
-                </ListItem>
-                <Collapse in={open['rec-playlist']} timeout="auto" unmountOnExit>
-                  {props.recPlaylists.items.length > 0 &&
+              </Collapse>
+              <ListItem button onClick={() => handleClick('rec-playlist')}>
+                <ListItemText primary="🌟 Our recommendation" />
+                {open['rec-playlist'] ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse in={open['rec-playlist']} timeout="auto" unmountOnExit>
+                {props.recPlaylists.items.length > 0 &&
                   props.recPlaylists.items.map((each) => {
                     return (
                       <ListItem key={each.id} className={classes.playlist}>
@@ -149,11 +148,11 @@ const PlayerPlaylist = (props) => {
                       </ListItem>
                     );
                   })}
-                </Collapse>
-              </List>
-            ) : (
-              <div>Cannot load playlists info</div>
-            )}
+              </Collapse>
+            </List>
+          ) : (
+            <div>Cannot load playlists info</div>
+          )}
         </>
       )}
     </div>

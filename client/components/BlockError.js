@@ -28,14 +28,14 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     boxShadow: '0 5px 10px 0px #ccb8b8',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   form: {
     width: '80%',
   },
   goAnyway: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   button: {
     border: 0,
@@ -45,11 +45,13 @@ const useStyles = makeStyles((theme) => ({
     padding: 6,
     borderRadius: 5,
     width: 200,
-    backgroundImage: 'linear-gradient(140deg,#ffffff 25%, #ffffff 50%,#ffffff 90%)',
+    backgroundImage:
+      'linear-gradient(140deg,#ffffff 25%, #ffffff 50%,#ffffff 90%)',
     transition: 'width 2s, background-image 4s, ease-out',
     '&:hover': {
-      backgroundImage: 'linear-gradient(140deg,#faefe8 25%, #d7dae8 50%,#cedaa4 90%)',
-      width: 400
+      backgroundImage:
+        'linear-gradient(140deg,#faefe8 25%, #d7dae8 50%,#cedaa4 90%)',
+      width: 400,
     },
   },
   link: {
@@ -59,9 +61,10 @@ const useStyles = makeStyles((theme) => ({
     padding: 6,
     textAlign: 'center',
     '&:hover': {
-      backgroundImage: 'linear-gradient(140deg,#faefe8 25%, #d7dae8 50%,#cedaa4 90%)',
+      backgroundImage:
+        'linear-gradient(140deg,#faefe8 25%, #d7dae8 50%,#cedaa4 90%)',
     },
-  }
+  },
 }));
 
 const BlockError = (props) => {
@@ -86,9 +89,11 @@ const BlockError = (props) => {
   const [showLink, setShowLink] = useState(false);
 
   const goOrNoGo = () => {
-    if (answers.question1 === 'true' &&
-    answers.question2 === 'true' &&
-    answers.question3 === 'true') {
+    if (
+      answers.question1 === 'true' &&
+      answers.question2 === 'true' &&
+      answers.question3 === 'true'
+    ) {
       return true;
     } else {
       return false;
@@ -104,26 +109,27 @@ const BlockError = (props) => {
     setAnswers({ ...answers, [ev.target.name]: ev.target.value });
   };
 
-  // console.log(answers);
-
   return (
-    <div id='uhoh-blocked' className={classes.uhoh}>
+    <div id="uhoh-blocked" className={classes.uhoh}>
       <Typography variant="h5" gutterBottom>
-      💦 Looks like you are getting distracted 💦...
+        💦 Looks like you are getting distracted 💦...
       </Typography>
       <img src="https://pomodoro-go.s3.us-east-2.amazonaws.com/Kapture+2021-05-31+at+15.38.20.gif" />
       <Typography variant="body1">
         🧠 Think about these before you start browsing around:
       </Typography>
-      { goOrNoGo() ? undefined : (
+      {goOrNoGo() ? undefined : (
         <Alert severity="info" className={classes.form}>
-          If any of the answers is No, then you should probably go 👏 back 👏 to 👏 what you were
-          doing!
+          If any of the answers is No, then you should probably go 👏 back 👏 to
+          👏 what you were doing!
         </Alert>
       )}
       <br />
       <FormControl component="fieldset" className={classes.form}>
-        <FormLabel component="legend">Is looking at this site going to give you more satisfaction than finishing up your task at hand?</FormLabel>
+        <FormLabel component="legend">
+          Is looking at this site going to give you more satisfaction than
+          finishing up your task at hand?
+        </FormLabel>
         <RadioGroup
           aria-label="question1"
           name="question1"
@@ -133,7 +139,10 @@ const BlockError = (props) => {
           <FormControlLabel value="true" control={<Radio />} label="Yes" />
           <FormControlLabel value="false" control={<Radio />} label="No" />
         </RadioGroup>
-        <FormLabel component="legend">Is there a specific reason that you need to checkout this site during focus session?</FormLabel>
+        <FormLabel component="legend">
+          Is there a specific reason that you need to checkout this site during
+          focus session?
+        </FormLabel>
         <RadioGroup
           aria-label="question2"
           name="question2"
@@ -143,7 +152,10 @@ const BlockError = (props) => {
           <FormControlLabel value="true" control={<Radio />} label="Yes" />
           <FormControlLabel value="false" control={<Radio />} label="No" />
         </RadioGroup>
-        <FormLabel component="legend">If you still want to go, can you keep your browsing around under 5 minutes?</FormLabel>
+        <FormLabel component="legend">
+          If you still want to go, can you keep your browsing around under 5
+          minutes?
+        </FormLabel>
         <RadioGroup
           aria-label="question3"
           name="question3"
@@ -155,15 +167,22 @@ const BlockError = (props) => {
         </RadioGroup>
       </FormControl>
       {goOrNoGo() ? (
-        <div id='go-anyway' className={classes.goAnyway}>
-          <button onClick={goAnyway} className={classes.button}>Take me there anyway!😅</button>
+        <div id="go-anyway" className={classes.goAnyway}>
+          <button onClick={goAnyway} className={classes.button}>
+            Take me there anyway!😅
+          </button>
           {showLink === true && (
-            <a href={'https://'+latestBlockUrl} target='_blank' rel="noreferrer" className={classes.link}>Go to {latestBlockUrl} ➡️</a>
+            <a
+              href={'https://' + latestBlockUrl}
+              target="_blank"
+              rel="noreferrer"
+              className={classes.link}
+            >
+              Go to {latestBlockUrl} ➡️
+            </a>
           )}
         </div>
-      ) : (
-        null
-      )}
+      ) : null}
     </div>
   );
 };

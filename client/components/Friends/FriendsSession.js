@@ -64,7 +64,7 @@ const FriendsSession = (props) => {
       {props.onlineStatus ? (
         <Tooltip title="Online" placement="right">
           <StyledBadge
-            overlap="circle"
+            overlap="circular"
             anchorOrigin={{
               vertical: 'bottom',
               horizontal: 'right',

@@ -27,7 +27,7 @@ function Alert(props) {
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    width: 400,
+    width: '100%',
     margin: 10,
     padding: 10,
     border: '1px solid #ccb8b8',

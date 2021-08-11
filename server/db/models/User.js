@@ -1,4 +1,12 @@
-const { UUID, UUIDV4, STRING, INTEGER, TEXT, BOOLEAN } = require('sequelize');
+const {
+  UUID,
+  UUIDV4,
+  STRING,
+  INTEGER,
+  TEXT,
+  BOOLEAN,
+  DATE,
+} = require('sequelize');
 const db = require('../db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -45,6 +53,16 @@ const User = db.define('user', {
     type: STRING,
     defaultValue:
       'https://flyinryanhawks.org/wp-content/uploads/2016/08/profile-placeholder.png',
+  },
+  resetPasswordToken: {
+    type: STRING,
+    defaultValue: null,
+    allowNull: true,
+  },
+  resetPasswordTokenExpires: {
+    type: DATE,
+    defaultValue: null,
+    allowNull: true,
   },
 });
 

@@ -1,17 +1,12 @@
-import axios from 'axios';
-import history from '../history';
-
+import customAxios from './customAxios';
 const GET_SITES = 'GET_SITES';
 const ADD_SITE = 'ADD_SITE';
 const DELETE_SITE = 'DELETE_SITE';
-
 //get sites
 export const getSites = (userId) => {
   return async (dispatch) => {
     try {
-      const currentUser = (
-        await axios.get(`${process.env.API_URL}/api/users/${userId}`)
-      ).data;
+      const currentUser = (await customAxios.get(`users/${userId}`)).data;
       const blockedSites = currentUser.sites;
       dispatch(_getSites(blockedSites));
     } catch (err) {
@@ -32,7 +27,7 @@ export const addSite = (site, userId) => {
   return async (dispatch) => {
     try {
       const newSite = (
-        await axios.post(`${process.env.API_URL}/api/sites`, {
+        await customAxios.post(`sites`, {
           ...site,
           userId: userId,
         })
@@ -44,13 +39,12 @@ export const addSite = (site, userId) => {
   };
 };
 
-
 //delete a site from a user
 export const deleteSite = (userId, siteId) => {
   console.log('userId', userId, 'siteId', siteId);
   return async (dispatch) => {
     try {
-      await axios.delete(`${process.env.API_URL}/api/sites/${userId}/${siteId}`);
+      await customAxios.delete(`sites/${userId}/${siteId}`);
       dispatch(getSites(userId));
     } catch (err) {
       console.log(err);
@@ -62,7 +56,7 @@ export const deleteSite = (userId, siteId) => {
 export const updateBlocking = (userId, siteId) => {
   return async (dispatch) => {
     try {
-      await axios.put(`${process.env.API_URL}/api/blackList/${userId}/${siteId}`);
+      await customAxios.put(`blackList/${userId}/${siteId}`);
       dispatch(getSites(userId));
     } catch (err) {
       console.log(err);

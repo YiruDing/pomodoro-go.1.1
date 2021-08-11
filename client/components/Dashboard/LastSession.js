@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import { Typography, Paper, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import dayjs from 'dayjs';
@@ -37,7 +36,7 @@ const LastSession = (props) => {
   }
 
   return (
-    <Paper className={classes.contain} elevation={10} >
+    <Paper className={classes.contain} elevation={10}>
       <Typography className={classes.lsItem} variant="h5" color="textPrimary">
         Last Session
       </Typography>
@@ -47,7 +46,9 @@ const LastSession = (props) => {
             Length
           </Typography>
           <Typography variant="h5">
-            {lastSession ? `${Math.round(lastSession.sessionTime / 60000)}min` : ''}
+            {lastSession
+              ? `${Math.round(lastSession.sessionTime / 60000)}min`
+              : ''}
           </Typography>
         </Grid>
         <Grid item className={classes.lsItem} xs={6}>

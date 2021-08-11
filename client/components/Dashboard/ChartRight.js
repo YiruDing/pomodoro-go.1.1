@@ -12,14 +12,15 @@ import {
   MenuItem,
   Select,
   InputLabel,
-  Paper
+  Paper,
 } from '@material-ui/core';
 
 const useStyles = makeStyles({
   contain: {
     padding: 10,
     minWidth: 100,
-    flexGrow: 1,
+    // flexGrow: 1,
+    height: 525,
   },
   lsItem: {
     padding: 8,
@@ -361,7 +362,7 @@ const ChartRight = (props) => {
   const chart = {
     options: {
       legend: {
-        show: false
+        show: false,
       },
       chart: {
         background: 'transparent',
@@ -401,25 +402,27 @@ const ChartRight = (props) => {
           // distributed: false,
           // useFillColorAsStroke: false,
           colorScale: {
-            ranges: [{
-              from: 0,
-              to: 0,
-              color: backgroundPaper,
-              // foreColor: undefined,
-              // name: undefined,
-            }],
+            ranges: [
+              {
+                from: 0,
+                to: 0,
+                color: backgroundPaper,
+                // foreColor: undefined,
+                // name: undefined,
+              },
+            ],
             // inverse: false,
             // min: undefined,
             // max: undefined
           },
-        }
+        },
       },
       stroke: {
         show: true,
         curve: 'smooth',
         lineCap: 'butt',
         colors: [backgroundPaper],
-        width: .5,
+        width: 0.5,
         dashArray: 0,
       },
       tooltip: {
@@ -570,17 +573,33 @@ const ChartRight = (props) => {
   const series = monthData.series;
 
   //Blocks History Line Graph
-  const months = ['Jan', 'Feb','Mar', 'Apr', 'May', 'Jun','Jul','Aug','Sep','Oct', 'Nov', 'Dec']
-  let seriesMonthsBlocks = {}
-  months.forEach(month => {
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  let seriesMonthsBlocks = {};
+  months.forEach((month) => {
     seriesMonthsBlocks[month] = {};
-    sites.forEach(site => {
+    sites.forEach((site) => {
       seriesMonthsBlocks[month][site.name] = 0;
-    })
-  })
+    });
+  });
 
   blocks.forEach((block) => {
-    const { site: { name }, date } = block;
+    const {
+      site: { name },
+      date,
+    } = block;
     const month = dayjs(date).format('MMM');
     seriesMonthsBlocks[month][name]++;
   });
@@ -589,7 +608,7 @@ const ChartRight = (props) => {
   for (const [key, val] of Object.entries(seriesMonthsBlocks)) {
     blockMonthValsArr.push(val);
   }
-  console.log('bMVA:',blockMonthValsArr)
+  console.log('bMVA:', blockMonthValsArr);
 
   const monthDataBlocks = {
     series: [
@@ -611,18 +630,18 @@ const ChartRight = (props) => {
           return val.Instagram;
         }),
       },
-         {
-          name: 'Hulu',
-          data: blockMonthValsArr.map((val) => {
-            return val.Hulu;
-          }),
-        },
-          {
-          name: 'Netflix',
-          data: blockMonthValsArr.map((val) => {
-            return val.Netflix;
-          }),
-        },
+      {
+        name: 'Hulu',
+        data: blockMonthValsArr.map((val) => {
+          return val.Hulu;
+        }),
+      },
+      {
+        name: 'Netflix',
+        data: blockMonthValsArr.map((val) => {
+          return val.Netflix;
+        }),
+      },
     ],
     categories: monthsArr,
   };
@@ -634,7 +653,7 @@ const ChartRight = (props) => {
     },
     stroke: {
       curve: 'smooth',
-       width: 2,
+      width: 2,
     },
 
     xaxis: {
@@ -670,8 +689,8 @@ const ChartRight = (props) => {
     },
   };
   const seriesBlocks = monthDataBlocks.series;
-  console.log('seriesBlocks:',seriesBlocks)
-  console.log('monthData.sereis:', monthData.series)
+  console.log('seriesBlocks:', seriesBlocks);
+  console.log('monthData.sereis:', monthData.series);
   return (
     <Paper className={classes.contain} {...props} elevation={10}>
       <Grid container direction="row" justify="space-between">
