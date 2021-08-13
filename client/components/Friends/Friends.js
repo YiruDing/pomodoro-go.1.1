@@ -82,16 +82,16 @@ const Friends = (props) => {
     socket.emit('get all loggedin users');
   }, []);
 
-  socket.on('other login', (data) => {
-    console.log('someome else', data);
-  });
+  // socket.on('other login', (data) => {
+  //   console.log('someone else', data);
+  // });
 
   socket.on('send all logged in users', (data) => {
     // console.log('all logged in users', data);
     setLoggedInUsers({ ...data });
   });
 
-  console.log(loggedInUsers);
+  // console.log(loggedInUsers);
 
   return (
     <>

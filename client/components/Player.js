@@ -94,7 +94,6 @@ const Player = (props) => {
         window.localStorage.getItem('spotify_access_token')
       );
     }
-    // console.log('state duration - initial state', props.trackDuration);
   }, []);
 
   // useEffect(() => {

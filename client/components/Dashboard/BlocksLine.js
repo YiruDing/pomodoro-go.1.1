@@ -33,14 +33,11 @@ const BlocksLine = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const { blocks } = props;
-  console.log('blocks:',blocks)
   const primaryColor = theme.palette.primary.main;
   const errorColor = theme.palette.error.main;
 
   //Session History Chart
-  let seriesBlocks = {
-
-  };
+  let seriesBlocks = {};
   // sessions.forEach((session) => {
   //   const { startTime, successful } = session;
   //   const month = dayjs(startTime).format('MMM');

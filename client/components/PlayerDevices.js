@@ -75,7 +75,6 @@ const PlayerDevices = (props) => {
 
         // Playback status updates
         player.addListener('player_state_changed', (state) => {
-          console.log(state);
           if (state) {
             window.localStorage.setItem(
               'spotify_current_track',

@@ -35,7 +35,6 @@ const approveFriend = (requesteeId, requesterId) => {
           requesterId: requesterId,
         })
       ).data;
-      console.log(updateRequest);
       dispatch(_approveFriend(updateRequest));
     } catch (err) {
       console.log(err);

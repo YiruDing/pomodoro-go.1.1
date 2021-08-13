@@ -129,7 +129,7 @@ router.get('/reset', async (req, res, next) => {
         // },
       },
     });
-    console.log(user[0]);
+    // console.log(user[0]);
     res.status(200).send({
       email: user[0].email,
       message: 'password link accepted',
@@ -143,7 +143,7 @@ router.get('/reset', async (req, res, next) => {
 
 router.put('/updatePassword', async (req, res, next) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     const { email, password } = req.body;
     const user = await User.findAll({
       where: {

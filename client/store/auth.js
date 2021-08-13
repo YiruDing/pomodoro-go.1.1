@@ -27,7 +27,6 @@ const setAuth = (auth) => ({ type: SET_AUTH, auth });
 export const me = () => async (dispatch) => {
   const token = window.localStorage.getItem(TOKEN);
   if (token) {
-    console.log(process.env.API_URL);
     const res = await axios.get(`${process.env.API_URL}/auth/me`, {
       headers: {
         authorization: token,
@@ -43,7 +42,6 @@ export const authenticateGoogle =
       const response = await axios.post('/auth/google', data, {
         headers: { authorization: data.tokenId },
       });
-      console.log(response.data);
       window.localStorage.setItem('token', response.data.token);
       dispatch(me());
     } catch (error) {

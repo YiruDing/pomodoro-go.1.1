@@ -141,7 +141,6 @@ const Timer = (props) => {
       const now = new Date();
       const expectedEndTime = new Date(currentSession.expectedEndTime);
       if (dateInPast(expectedEndTime, now)) {
-        console.log('end session date in past conditional');
         props.endSession(currentSession.id, true);
       }
     }

@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RequestsToOthers = (props) => {
-  // console.log(props);
   const classes = useStyles();
   useEffect(() => {
     props.getMyRequestToOthers(props.auth.id);

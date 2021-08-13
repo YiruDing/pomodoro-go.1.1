@@ -40,7 +40,6 @@ router.get('/', requireToken, async (req, res, next) => {
           );
           if (response.status === 200) {
             const responseData = response.data;
-            console.log(responseData);
             res.redirect(
               `${process.env.API_URL}/home?` + //updated the hardcoded url
                 querystring.stringify({

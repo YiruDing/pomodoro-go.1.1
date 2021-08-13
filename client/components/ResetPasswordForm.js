@@ -34,7 +34,6 @@ class ResetPasswordForm extends React.Component {
           resetToken,
         },
       });
-      console.log(response);
       if (response.data.message === 'password link accepted') {
         this.setState({
           email: response.data.email,
@@ -67,7 +66,6 @@ class ResetPasswordForm extends React.Component {
       email: '',
       password: '',
     });
-    console.log('submit button clicked');
   }
 
   async updatePassword() {

@@ -16,7 +16,6 @@ export const addToQueue = (accessToken, trackUri) => {
           },
         }
       );
-      console.log('what is the newly added track?', newlyAdded);
       if (newlyAdded.status === 204) {
         dispatch(_addToQueue('Track added to queue'));
       }
