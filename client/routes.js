@@ -129,7 +129,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
-      if (localStorage.getItem('token')) {
+      if (localStorage.getItem('token').length) {
         dispatch(me());
         dispatch(loadSessions());
         dispatch(loadSites());
