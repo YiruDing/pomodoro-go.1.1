@@ -43,7 +43,10 @@ const reducer = combineReducers({
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );
-const store = createStore(reducer, middleware);
+let store;
+if (process.env.API_URL.includes('localhost')) {
+  store = createStore(reducer, middleware);
+} else store = createStore(reducer);
 
 export default store;
 export * from './auth';
