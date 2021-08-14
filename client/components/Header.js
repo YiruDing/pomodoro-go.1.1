@@ -58,6 +58,7 @@ const useStyles = makeStyles(() => ({
     backgroundColor: '#5061a9',
     paddingRight: '79px',
     paddingLeft: '118px',
+    marginBottom: 100,
     '@media (max-width: 900px)': {
       paddingLeft: 0,
     },
