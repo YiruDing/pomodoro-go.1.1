@@ -19,35 +19,33 @@ router.get('/', requireToken, async (req, res, next) => {
   }
 });
 
-router.post('/', requireToken, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
-    if (req.user.admin || req.user.id === req.params.userId) {
-      if (req.body.siteId) {
-        const { siteId } = req.body;
+    if (req.body.siteId) {
+      const { siteId } = req.body;
+      const block = await Block.create({
+        siteId,
+      });
+      res.send(block);
+    } else if (req.body.userAttempted) {
+      const matchingSite = await Site.findOne({
+        where: {
+          siteUrl: req.body.userAttempted,
+        },
+      });
+      if (matchingSite) {
+        const { userId } = req.body;
         const block = await Block.create({
-          siteId,
+          siteId: matchingSite.id,
+          userId,
         });
+        const date = block.createdAt;
+        block.date = date;
+        await block.save();
+        console.log('after adding date', block.date);
         res.send(block);
-      } else if (req.body.userAttempted) {
-        const matchingSite = await Site.findOne({
-          where: {
-            siteUrl: req.body.userAttempted,
-          },
-        });
-        if (matchingSite) {
-          const { userId } = req.body;
-          const block = await Block.create({
-            siteId: matchingSite.id,
-            userId,
-          });
-          const date = block.createdAt;
-          block.date = date;
-          await block.save();
-          console.log('after adding date', block.date);
-          res.send(block);
-        }
       }
-    } else res.sendStatus(401);
+    }
   } catch (err) {
     next(err);
   }

@@ -30,24 +30,22 @@ router.put('/:blackListId', requireToken, async (req, res, next) => {
   }
 });
 
-router.put('/:userId/:siteId', requireToken, async (req, res, next) => {
+router.put('/:userId/:siteId', async (req, res, next) => {
   try {
-    if (req.user.admin || req.user.id === req.params.userId) {
-      const blackList = await BlackList.findAll({
-        where: {
-          siteId: req.params.siteId,
-          userId: req.params.userId,
-        },
-      });
-      if (blackList[0].blockingEnabled) {
-        blackList[0].blockingEnabled = false;
-        await blackList[0].save();
-      } else {
-        blackList[0].blockingEnabled = true;
-        await blackList[0].save();
-      }
-      res.sendStatus(201);
-    } else res.sendStatus(401);
+    const blackList = await BlackList.findAll({
+      where: {
+        siteId: req.params.siteId,
+        userId: req.params.userId,
+      },
+    });
+    if (blackList[0].blockingEnabled) {
+      blackList[0].blockingEnabled = false;
+      await blackList[0].save();
+    } else {
+      blackList[0].blockingEnabled = true;
+      await blackList[0].save();
+    }
+    res.sendStatus(201);
   } catch (error) {
     console.log('error in blackList put route');
     next(error);
