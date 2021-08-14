@@ -27,7 +27,8 @@ export default connect(null, (dispatch) => {
   return {
     updateSession: (sessionId, sessionTime) =>
       dispatch(updateSession(sessionId, sessionTime)),
-    endSession: (sessionId) => dispatch(endSession(sessionId)),
+    endSession: (sessionId, successful) =>
+      dispatch(endSession(sessionId, successful)),
   };
 })(function (props) {
   const classes = useStyles();
@@ -48,7 +49,7 @@ export default connect(null, (dispatch) => {
   };
   const handleStop = (ev) => {
     handleClose();
-    props.endSession(currentSession.id);
+    props.endSession(currentSession.id, false);
     chrome.runtime.sendMessage('kaghhmclljbnigfffgjhfbbbcpgenjoi', {
       message: 'timer',
       action: 'stop-timer',
