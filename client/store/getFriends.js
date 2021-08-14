@@ -5,7 +5,13 @@ const GET_REQUEST_TO_ME = 'GET_REQUEST_TO_ME';
 const getMyRequestToOthers = (userId) => {
   return async (dispatch) => {
     try {
-      const currentUser = (await customAxios.get(`users/${userId}`)).data;
+      const currentUser = (
+        await customAxios.get(`users/${userId}`, {
+          headers: {
+            Authorization: localStorage.getItem('token'),
+          },
+        })
+      ).data;
       const myRequests = currentUser.requester; //get where current user is the requester of friends requests
       dispatch(_getMyRequestToOthers(myRequests));
     } catch (err) {
@@ -24,7 +30,13 @@ const _getMyRequestToOthers = (myRequests) => {
 const getRequestsToMe = (userId) => {
   return async (dispatch) => {
     try {
-      const currentUser = (await customAxios.get(`users/${userId}`)).data;
+      const currentUser = (
+        await customAxios.get(`users/${userId}`, {
+          headers: {
+            Authorization: localStorage.getItem('token'),
+          },
+        })
+      ).data;
       const requestsToMe = currentUser.requestee; //get where current user is the requester of friends requests
       dispatch(_getRequestsToMe(requestsToMe));
     } catch (err) {

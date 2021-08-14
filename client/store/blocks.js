@@ -10,7 +10,11 @@ const loadBlocksActionCreator = (blocks) => {
 const loadBlocks = () => {
   return async (dispatch) => {
     try {
-      const response = await customAxios.get(`blocks`);
+      const response = await customAxios.get(`blocks`, {
+        headers: {
+          Authorization: localStorage.getItem('token'),
+        },
+      });
       const blocks = response.data;
       dispatch(loadBlocksActionCreator(blocks));
     } catch (error) {
@@ -32,10 +36,18 @@ const createBlockActionCreator = (block) => {
 };
 const createBlock = (userId, siteId) => async (dispatch) => {
   try {
-    const response = await customAxios.post(`blocks`, {
-      userId,
-      siteId,
-    });
+    const response = await customAxios.post(
+      `blocks`,
+      {
+        userId,
+        siteId,
+      },
+      {
+        headers: {
+          Authorization: localStorage.getItem('token'),
+        },
+      }
+    );
     const { data } = response;
     dispatch(createBlockActionCreator(data));
   } catch (error) {

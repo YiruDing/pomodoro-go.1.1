@@ -6,9 +6,15 @@ const DELETE_SITE = 'DELETE_SITE';
 export const getSites = (userId) => {
   return async (dispatch) => {
     try {
-      const currentUser = (await customAxios.get(`users/${userId}`)).data;
-      const blockedSites = currentUser.sites;
-      dispatch(_getSites(blockedSites));
+      if (localStorage.getItem('token')) {
+        const currentUser = (
+          await customAxios.get(`users/${userId}`, {
+            headers: { authorization: localStorage.getItem('token') },
+          })
+        ).data;
+        const blockedSites = currentUser.sites;
+        dispatch(_getSites(blockedSites));
+      }
     } catch (err) {
       console.log(err);
     }
@@ -27,10 +33,18 @@ export const addSite = (site, userId) => {
   return async (dispatch) => {
     try {
       const newSite = (
-        await customAxios.post(`sites`, {
-          ...site,
-          userId: userId,
-        })
+        await customAxios.post(
+          `sites`,
+          {
+            ...site,
+            userId: userId,
+          },
+          {
+            headers: {
+              Authorization: localStorage.getItem('token'),
+            },
+          }
+        )
       ).data;
       dispatch(getSites(userId));
     } catch (err) {
@@ -44,7 +58,11 @@ export const deleteSite = (userId, siteId) => {
   console.log('userId', userId, 'siteId', siteId);
   return async (dispatch) => {
     try {
-      await customAxios.delete(`sites/${userId}/${siteId}`);
+      await customAxios.delete(`sites/${userId}/${siteId}`, {
+        headers: {
+          Authorization: localStorage.getItem('token'),
+        },
+      });
       dispatch(getSites(userId));
     } catch (err) {
       console.log(err);

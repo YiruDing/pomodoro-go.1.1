@@ -4,7 +4,13 @@ const GET_ALL_USERS = 'GET_ALL_USERS';
 export const getAllUsers = () => {
   return async (dispatch) => {
     try {
-      const allUsers = (await customAxios.get(`users`)).data;
+      const allUsers = (
+        await customAxios.get(`users`, {
+          headers: {
+            Authorization: localStorage.getItem('token'),
+          },
+        })
+      ).data;
       dispatch(_getAllUsers(allUsers));
     } catch (err) {
       console.log(err);

@@ -10,7 +10,11 @@ const loadSitesActionCreator = (sites) => {
 const loadSites = () => {
   return async (dispatch) => {
     try {
-      const response = await customAxios.get(`sites`);
+      const response = await customAxios.get(`sites`, {
+        headers: {
+          Authorization: localStorage.getItem('token'),
+        },
+      });
       const sites = response.data;
       dispatch(loadSitesActionCreator(sites));
     } catch (error) {
@@ -31,7 +35,11 @@ const updateSiteActionCreator = (site) => {
 
 const updateSite = (siteId, siteInfo) => {
   return async (dispatch) => {
-    const response = await customAxios.put(`sites/${siteId}`, siteInfo);
+    const response = await customAxios.put(`sites/${siteId}`, siteInfo, {
+      headers: {
+        Authorization: localStorage.getItem('token'),
+      },
+    });
 
     const { data } = response;
     dispatch(updateSiteActionCreator(data));

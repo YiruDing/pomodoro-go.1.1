@@ -10,7 +10,11 @@ const loadSessionsActionCreator = (sessions) => {
 const loadSessions = () => {
   return async (dispatch) => {
     try {
-      const response = await customAxios.get(`sessions`);
+      const response = await customAxios.get(`sessions`, {
+        headers: {
+          Authorization: localStorage.getItem('token'),
+        },
+      });
       const sessions = response.data;
       dispatch(loadSessionsActionCreator(sessions));
     } catch (error) {
@@ -31,7 +35,11 @@ export const loadSessionActionCreator = (session) => {
 
 const loadSession = (sessionId) => async (dispatch) => {
   try {
-    const res = await customAxios.get(`sessions/${sessionId}`);
+    const res = await customAxios.get(`sessions/${sessionId}`, {
+      headers: {
+        Authorization: localStorage.getItem('token'),
+      },
+    });
     dispatch(loadSessionActionCreator(res.data));
   } catch (error) {
     console.log('error in loadSession thunk');
@@ -56,10 +64,18 @@ const createSessionActionCreator = (session) => {
 };
 const createSession = (userId, goal) => async (dispatch) => {
   try {
-    const response = await customAxios.post(`sessions`, {
-      userId,
-      goal,
-    });
+    const response = await customAxios.post(
+      `sessions`,
+      {
+        userId,
+        goal,
+      },
+      {
+        headers: {
+          Authorization: localStorage.getItem('token'),
+        },
+      }
+    );
     const { data } = response;
 
     localStorage.setItem('currentSession', JSON.stringify(data));
@@ -83,7 +99,12 @@ const updateSession = (sessionId, sessionInfo) => async (dispatch) => {
   try {
     const response = await customAxios.put(
       `sessions/${sessionId}`,
-      sessionInfo
+      sessionInfo,
+      {
+        headers: {
+          Authorization: localStorage.getItem('token'),
+        },
+      }
     );
     const { data } = response;
     window.localStorage.setItem('currentSession', JSON.stringify(data));
@@ -109,13 +130,29 @@ export const endSession =
   (sessionId, successful = false) =>
   async (dispatch) => {
     try {
-      let response = await customAxios.put(`sessions/${sessionId}/end`, {
-        successful,
-      });
-      if (response.data.status === 'Ongoing') {
-        response = await customAxios.put(`sessions/${sessionId}/end`, {
+      let response = await customAxios.put(
+        `sessions/${sessionId}/end`,
+        {
           successful,
-        });
+        },
+        {
+          headers: {
+            Authorization: localStorage.getItem('token'),
+          },
+        }
+      );
+      if (response.data.status === 'Ongoing') {
+        response = await customAxios.put(
+          `sessions/${sessionId}/end`,
+          {
+            successful,
+          },
+          {
+            headers: {
+              Authorization: localStorage.getItem('token'),
+            },
+          }
+        );
       }
       chrome.runtime.sendMessage('kaghhmclljbnigfffgjhfbbbcpgenjoi', {
         message: 'stop-timer',
@@ -145,9 +182,17 @@ const addTaskCreator = (session) => {
 
 const addTask = (task, sessionId) => {
   return async (dispatch) => {
-    const response = await customAxios.post(`sessions/${sessionId}/tasks`, {
-      task,
-    });
+    const response = await customAxios.post(
+      `sessions/${sessionId}/tasks`,
+      {
+        task,
+      },
+      {
+        headers: {
+          Authorization: localStorage.getItem('token'),
+        },
+      }
+    );
     const updatedSession = response.data;
     dispatch(addTaskCreator(updatedSession));
   };

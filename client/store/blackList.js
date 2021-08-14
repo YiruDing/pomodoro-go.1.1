@@ -11,7 +11,11 @@ const loadBlackListActionCreator = (blackList) => {
 const loadBlackList = () => {
   return async (dispatch) => {
     try {
-      const response = await customAxios.get(`blackList`);
+      const response = await customAxios.get(`blackList`, {
+        headers: {
+          Authorization: localStorage.getItem('token'),
+        },
+      });
       const blackList = response.data;
       dispatch(loadBlackListActionCreator(blackList));
     } catch (error) {
@@ -35,7 +39,12 @@ const updateBlackList = (blackListId, blackListInfo) => {
   return async (dispatch) => {
     const response = await customAxios.put(
       `blackList/${blackListId}`,
-      blackListInfo
+      blackListInfo,
+      {
+        headers: {
+          Authorization: localStorage.getItem('token'),
+        },
+      }
     );
 
     const { data } = response;
