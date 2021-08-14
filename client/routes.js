@@ -33,7 +33,10 @@ class Routes extends Component {
     super(props);
   }
   componentDidMount() {
-    this.props.loadInitialData();
+    if (localStorage.getItem('token')) {
+      console.log('getting token', localStorage.getItem('token'));
+      this.props.loadInitialData();
+    }
     const currentSession = JSON.parse(localStorage.getItem('currentSession'));
     if (currentSession?.status === 'Ongoing') {
       this.props.loadCurrentSession(currentSession.id);
@@ -43,7 +46,11 @@ class Routes extends Component {
   }
 
   async componentDidUpdate(prevProps) {
-    if (this.props.auth && this.props.auth.id !== prevProps.auth.id) {
+    if (
+      this.props.auth &&
+      this.props.auth.id !== prevProps.auth.id &&
+      localStorage.getItem('token')
+    ) {
       await this.props.getSites(this.props.auth.id);
     }
 
@@ -77,7 +84,7 @@ class Routes extends Component {
       });
 
     return (
-      <div style={{ height: '100%', paddingTop: '50px' }}>
+      <div style={{ height: '100%', marginTop: '70px' }}>
         {chrome.storage ? <RedirectToSite /> : null}
         {isLoggedIn && !chrome.storage ? (
           <Switch>
@@ -132,7 +139,6 @@ const mapDispatch = (dispatch) => {
       if (localStorage.getItem('token')?.length) {
         dispatch(me());
         dispatch(loadSessions());
-        dispatch(loadSites());
         dispatch(loadBlackList());
         dispatch(loadBlocks());
       }
