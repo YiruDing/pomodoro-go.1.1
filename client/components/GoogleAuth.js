@@ -26,6 +26,7 @@ const GoogleAuth = (props) => {
             height: 30,
             width: 30,
             border: 0,
+            marginTop: 5,
             borderRadius: '50%',
           }}
           src="https://i.pinimg.com/originals/a3/d5/8f/a3d58f0b2820871d486e9851c0fdbb60.jpg"
@@ -48,6 +49,7 @@ const GoogleAuth = (props) => {
             height: 30,
             width: 30,
             border: 0,
+            marginTop: 5,
             borderRadius: '50%',
           }}
           src="https://img-authors.flaticon.com/google.jpg"
