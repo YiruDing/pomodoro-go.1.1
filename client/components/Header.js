@@ -123,7 +123,6 @@ export default connect(
     console.log('sign in failure', response);
   };
   const displayDesktop = () => {
-    console.log(getMenuButtons());
     return (
       <Toolbar className={toolbar}>
         <MainLogo />
@@ -173,9 +172,13 @@ export default connect(
   const getDrawerChoices = () => {
     const choices = headersData.map(({ label, href }) => {
       if (props.isLoggedIn) {
-        if (label === 'Logout' && !['Login', 'Sign'].includes(label)) {
-          return <MenuItem onClick={props.handleLogOut}>Logout</MenuItem>;
-        } else if (!['Login', 'Sign'].includes(label)) {
+        if (label === 'Logout' && !['Login', 'Sign up'].includes(label)) {
+          return (
+            <MenuItem key={label} onClick={props.handleLogOut}>
+              Logout
+            </MenuItem>
+          );
+        } else if (!['Login', 'Sign up'].includes(label)) {
           return (
             <Link
               {...{
@@ -192,14 +195,9 @@ export default connect(
         }
       } else {
         if (
-          ![
-            'Dashboard',
-            'Home',
-            'Block Sites',
-            'Sign',
-            'Friends',
-            'Logout',
-          ].includes(label)
+          !['Dashboard', 'Home', 'Block Sites', 'Friends', 'Logout'].includes(
+            label
+          )
         ) {
           return (
             <Link
