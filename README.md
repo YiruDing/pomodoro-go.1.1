@@ -31,7 +31,7 @@
   <h3 align="center">Pomodoro-Go</h3>
 
   <p align="center">
-    Pomodoro-Go is an App/Chrome Extension inspired by the pomdoro technique, also known as tomato timer. Pomdoro-Go helps boost productivity by allowing you to create focus sessions for studying, working, reading or meditating, set specific sites to block and track previous sessions using interactive charts and graphs. Also, you can connect to your spotify account and listen to your playlists or one of our recommended playlists. Share what you've achieved with your friends, and make work a more interesting experience!
+    Pomodoro-Go is an App/Chrome Extension inspired by the pomdoro technique, also known as tomato timer. Pomdoro-Go helps boost productivity by allowing you to create focus sessions for studying, working, reading or meditating, set specific sites to block and track previous sessions using interactive charts and graphs. Also, you can connect to your spotify account and listen to your playlists or one of our recommended playlists. Share what you've achieved with your friends, and make work a more interesting experience!      
     <br />
     <br />
     <a href="https://github.com/2101-Warriors/pomodoro-go.1.1/issues">Report Bug</a>
@@ -40,41 +40,11 @@
   </p>
 </p>
 
-<!-- TABLE OF CONTENTS -->
-<details open="open">
-  <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
-  </ol>
-</details>
-
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
 
 ![welcome](/public/assets/welcome.png)
-
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`2101-Warriors`, `pomodoro-go.1.1`, `twitter_handle`, `email`, `project_title`, `project_description`
 
 ### Built With
 
@@ -108,13 +78,17 @@ To get a local copy up and running follow these simple steps.
    npm install
    ```
 
+### Loading extension
+
+1. Navigate to the chrome extenstions
+   <img src="public/assets/step1.png" height="240px" width="240px">
+   <img src="public/assets/step2.png" height="240px" width="240px">
+
 <!-- USAGE EXAMPLES -->
 
 ## Usage
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
 
 <!-- CONTACT -->
 
