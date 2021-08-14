@@ -34,7 +34,6 @@ class Routes extends Component {
   }
   componentDidMount() {
     if (localStorage.getItem('token')) {
-      console.log('getting token', localStorage.getItem('token'));
       this.props.loadInitialData();
     }
     const currentSession = JSON.parse(localStorage.getItem('currentSession'));
