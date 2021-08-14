@@ -16,7 +16,6 @@ const useStyles = makeStyles(() => ({
 
 const App = (props) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const currentSession = useSelector((state) => state.currentSession);
   const [sessionTime, setSessionTime] = useState(0);
   const [goal, setGoal] = useState('');
@@ -45,6 +44,10 @@ const App = (props) => {
   }, [sessionTime]);
 
   useEffect(() => {
+    chrome.runtime.sendMessage('kaghhmclljbnigfffgjhfbbbcpgenjoi', {
+      message: 'set-env-vars',
+      API_URL: process.env.API_URL,
+    });
     return () =>
       chrome.runtime.sendMessage('kaghhmclljbnigfffgjhfbbbcpgenjoi', {
         message: 'store-session-data',
