@@ -7,7 +7,7 @@
 ***
 ***
 *** To avoid retyping too much info. Do a search and replace for the following:
-*** github_username, repo_name, twitter_handle, email, project_title, project_description
+*** 2101-Warriors, pomodoro-go.1.1, twitter_handle, email, project_title, project_description
 -->
 
 <!-- PROJECT SHIELDS -->
@@ -33,14 +33,10 @@
   <p align="center">
     Pomodoro-Go is an App/Chrome Extension inspired by the pomdoro technique, also known as tomato timer. Pomdoro-Go helps boost productivity by allowing you to create focus sessions for studying, working, reading or meditating, set specific sites to block and track previous sessions using interactive charts and graphs. Also, you can connect to your spotify account and listen to your playlists or one of our recommended playlists. Share what you've achieved with your friends, and make work a more interesting experience!
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
     <br />
-    <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <a href="https://github.com/2101-Warriors/pomodoro-go.1.1/issues">Report Bug</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+    <a href="https://github.com/2101-Warriors/pomodoro-go.1.1/issues">Request Feature</a>
   </p>
 </p>
 
@@ -78,13 +74,15 @@
 
 Here's a blank template to get started:
 **To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`github_username`, `repo_name`, `twitter_handle`, `email`, `project_title`, `project_description`
+`2101-Warriors`, `pomodoro-go.1.1`, `twitter_handle`, `email`, `project_title`, `project_description`
 
 ### Built With
 
-- []()
-- []()
-- []()
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com/)
+- [React](https://reactjs.org/)
+- [Redux](https://redux.js.org/)
+- [PostgreSql](https://www.postgresql.org/)
 
 <!-- GETTING STARTED -->
 
@@ -93,8 +91,6 @@ Here's a blank template to get started:
 To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
 
 - npm
   ```sh
@@ -105,7 +101,7 @@ This is an example of how to list things you need to use the software and how to
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/2101-Warriors/pomodoro-go.1.1.git
    ```
 2. Install NPM packages
    ```sh
@@ -126,7 +122,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Project Link: [https://github.com/2101-Warriors/pomodoro-go.1.1](https://github.com/2101-Warriors/pomodoro-go.1.1)
 
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/2101-Warriors/repo.svg?style=for-the-badge
 [contributors-url]: https://https://github.com/2101-Warriors/pomodoro-go.1.1/graphs/contributors
