@@ -12,6 +12,7 @@ module.exports = async (req, res, next) => {
       next();
     } catch (error) {
       console.log('Error in requireToken middleware', error);
+      next(error);
     }
   } else res.sendStatus(401);
 };
