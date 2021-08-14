@@ -56,10 +56,18 @@ const background = {
     return runtime.onMessageExternal.addListener(
       async (message, sender, sendResponse) => {
         try {
+          if (message.message === 'store-token') {
+            const { token } = message;
+            await storage.sync.set({ token });
+          }
           if (message.message === 'store-session-data') {
             console.log('left site', message);
             const { sessionId } = message.sessionData;
             await storage.sync.set({ sessionId });
+          }
+          if (message.message === 'set-env-vars') {
+            const { API_URL } = message;
+            await storage.sync.set({ API_URL });
           }
           if (message.message === 'timer') {
             if (message.action === 'create-timer') {
@@ -178,35 +186,39 @@ const background = {
 
         storage.sync.set({ userAttempt: hostname });
 
-        storage.sync.get(['blocked', 'currUser'], async function (sync) {
-          const { blocked, currUser } = sync;
-          if (
-            Array.isArray(blocked) &&
-            blocked.find((domain) => {
-              return domain.includes(hostname);
-            })
-          ) {
-            const options = {
-              method: 'post',
-              headers: {
-                'Content-type':
-                  'application/x-www-form-urlencoded; charset=UTF-8',
-              },
-              body: `userAttempted=${hostname}&userId=${currUser}`,
-            };
+        storage.sync.get(
+          ['blocked', 'currUser', 'API_URL', 'token'],
+          async function (sync) {
+            const { blocked, currUser } = sync;
+            if (
+              Array.isArray(blocked) &&
+              blocked.find((domain) => {
+                return domain.includes(hostname);
+              })
+            ) {
+              console.log('token', sync.token);
+              const options = {
+                method: 'post',
+                headers: {
+                  'Content-type':
+                    'application/x-www-form-urlencoded; charset=UTF-8',
+                },
+                body: `userAttempted=${hostname}&userId=${currUser}`,
+              };
 
-            try {
-              await fetch('https://localhost:8080' + '/api/blocks', options);
-            } catch (err) {
-              console.error('Request failed', err);
+              try {
+                await fetch(sync['API_URL'] + '/api/blocks', options);
+              } catch (err) {
+                console.error('Request failed', err);
+              }
+
+              chrome.tabs.update(tabId, {
+                // url: 'https://pomodoro-go-2101.herokuapp.com/uhoh',
+                url: sync['API_URL'] + '/uhoh',
+              }); // hard-code it to production url atm instead of 'http://localhost:8080/uhoh'
             }
-
-            chrome.tabs.update(tabId, {
-              // url: 'https://pomodoro-go-2101.herokuapp.com/uhoh',
-              url: 'https://pomodoro-go.herokuapp.com/uhoh',
-            }); // hard-code it to production url atm instead of 'http://localhost:8080/uhoh'
           }
-        });
+        );
       });
     });
   },
@@ -250,27 +262,31 @@ const background = {
         }
       });
       if (!appInTabs) {
-        await storage.sync.get(['sessionId', 'authToken'], (results) => {
-          console.log('results', results);
-          const options = {
-            method: 'put',
-            headers: {
-              'Content-type': 'application/json',
-              //     Authorization: results.authToken,
-            },
-            // body: 'successful=true',
-          };
-          fetch(
-            `http://localhost:8080/api/sessions/${results.sessionId}/end`,
-            options
-          )
-            .then((response) => {
-              // console.log(response);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        });
+        await storage.sync.get(
+          ['sessionId', 'authToken', 'API_URL'],
+          (results) => {
+            console.log('results', results);
+            const options = {
+              method: 'put',
+              headers: {
+                'Content-type': 'application/json',
+              },
+              body: JSON.stringify({
+                successful: true,
+              }),
+            };
+            fetch(
+              `${results['API_URL']}/api/sessions/${results.sessionId}/end`,
+              options
+            )
+              .then((response) => {
+                // console.log(response);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        );
       }
       // notifies the user when the session is over
       chrome.notifications.create(
@@ -302,8 +318,10 @@ const background = {
       async (notificationId, buttonIdx) => {
         // redirects to dashboard after session is complete
         let tab = await this.getCurrentTab();
-        chrome.tabs.update(tab.id, {
-          url: 'https://pomodoro-go.herokuapp.com/dashboard',
+        storage.sync.get(['API_URL'], (sync) => {
+          chrome.tabs.update(tab.id, {
+            url: sync['API_URL'] + '/dashboard',
+          });
         });
       }
     );
