@@ -34,7 +34,6 @@ const Navbar = (props) => {
           <ExtensionNav headerStyle={classes.header} />
         ) : (
           <Header
-            handleLogOut={handleLogOut}
             isLoggedIn={props.isLoggedIn}
             getMe={props.getMe}
             handleLogOut={handleLogOut}
