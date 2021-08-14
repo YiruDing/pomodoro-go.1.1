@@ -242,7 +242,10 @@ const background = {
       console.log(allTabs);
       let appInTabs = false;
       allTabs.forEach((tab) => {
-        if (tab.url.includes('pomodoro-go') || tab.url.includes('localhost')) {
+        if (
+          tab.url.includes('pomodoro-go.heroku') ||
+          tab.url.includes('localhost')
+        ) {
           appInTabs = true;
         }
       });
