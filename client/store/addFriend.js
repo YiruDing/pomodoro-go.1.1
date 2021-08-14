@@ -7,10 +7,18 @@ const addFriend = (requesterId, requesteeId) => {
   return async (dispatch) => {
     try {
       const newRequest = (
-        await customAxios.post(`friendship`, {
-          requesterId: requesterId,
-          requesteeId: requesteeId,
-        })
+        await customAxios.post(
+          `friendship`,
+          {
+            requesterId: requesterId,
+            requesteeId: requesteeId,
+          },
+          {
+            headers: {
+              Authorization: localStorage.getItem('token'),
+            },
+          }
+        )
       ).data;
       dispatch(_addFriend(newRequest));
     } catch (err) {
@@ -30,10 +38,18 @@ const approveFriend = (requesteeId, requesterId) => {
   return async (dispatch) => {
     try {
       const updateRequest = (
-        await customAxios.put(`friendship`, {
-          requesteeId: requesteeId,
-          requesterId: requesterId,
-        })
+        await customAxios.put(
+          `friendship`,
+          {
+            requesteeId: requesteeId,
+            requesterId: requesterId,
+          },
+          {
+            headers: {
+              Authorization: localStorage.getItem('token'),
+            },
+          }
+        )
       ).data;
       dispatch(_approveFriend(updateRequest));
     } catch (err) {
