@@ -39,6 +39,8 @@ const AuthForm = (props) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [reenterPassword, setReenterPassword] = useState('');
+  const [emailSent, setEmailSent] = useState(false);
   const dispatch = useDispatch();
 
   const onChange = (ev) => {
@@ -48,6 +50,8 @@ const AuthForm = (props) => {
       setEmail(ev.target.value);
     } else if (ev.target.name === 'password') {
       setPassword(ev.target.value);
+    } else if (ev.target.name === 'reenterPassword') {
+      setReenterPassword(ev.target.value);
     }
   };
 
@@ -62,6 +66,9 @@ const AuthForm = (props) => {
   const handleReset = (ev) => {
     ev.preventDefault();
     dispatch(resetPassword(email));
+    if (!error) {
+      setEmailSent(true);
+    }
   };
   if (name === 'signup') {
     return (
@@ -114,6 +121,29 @@ const AuthForm = (props) => {
                 />
               </Grid>
               <Grid item>
+                <TextField
+                  type="password"
+                  id="reenterPassword"
+                  label="Re-enter Password"
+                  name="reenterPassword"
+                  // type='password'
+                  value={reenterPassword}
+                  onChange={onChange}
+                  variant="outlined"
+                  className={classes.item}
+                  size="small"
+                />
+              </Grid>
+              {password.length && password !== reenterPassword ? (
+                <Typography align="center" style={{ color: 'tomato' }}>
+                  {' '}
+                  Passwords do not match
+                </Typography>
+              ) : null}
+              <Typography align="center" style={{ color: 'tomato' }}>
+                {error && error.response && <div> {error.response.data} </div>}
+              </Typography>
+              <Grid item>
                 <Button
                   onClick={handleSubmit}
                   id="submit"
@@ -145,7 +175,6 @@ const AuthForm = (props) => {
               </Grid>
             </Grid>
           </Paper>
-          {error && error.response && <div> {error.response.data} </div>}
         </form>
       </div>
     );
@@ -188,6 +217,9 @@ const AuthForm = (props) => {
                   size="small"
                 />
               </Grid>
+              <Typography align="center" style={{ color: 'tomato' }}>
+                {error && error.response && <div> {error.response.data} </div>}
+              </Typography>
               <Grid item>
                 <Button
                   id="submit"
@@ -206,39 +238,36 @@ const AuthForm = (props) => {
                   {displayName}
                 </Button>
               </Grid>
-              <Grid item>
-                <Grid
-                  item
-                  container
-                  alignItems="center"
-                  direction="column"
-                  style={{
-                    paddingTop: 10,
-                  }}
-                >
-                  <Typography variant="caption">
-                    Need an account?{' '}
-                    <Link
-                      variant="caption"
-                      href={`${process.env.API_URL}/signup`}
-                    >
-                      Sign up
-                    </Link>
-                  </Typography>
-                  <Typography variant="caption">
-                    Forgot Password?{' '}
-                    <Link
-                      variant="caption"
-                      href={`${process.env.API_URL}/sendPasswordReset`}
-                    >
-                      Reset Password
-                    </Link>
-                  </Typography>
-                </Grid>
+              <Grid
+                item
+                container
+                alignItems="center"
+                direction="column"
+                style={{
+                  paddingTop: 10,
+                }}
+              >
+                <Typography variant="caption">
+                  Need an account?{' '}
+                  <Link
+                    variant="caption"
+                    href={`${process.env.API_URL}/signup`}
+                  >
+                    Sign up
+                  </Link>
+                </Typography>
+                <Typography variant="caption">
+                  Forgot Password?{' '}
+                  <Link
+                    variant="caption"
+                    href={`${process.env.API_URL}/sendPasswordReset`}
+                  >
+                    Reset Password
+                  </Link>
+                </Typography>
               </Grid>
             </Grid>
           </Paper>
-          {error && error.response && <div> {error.response.data} </div>}
         </form>
       </div>
     );
@@ -267,6 +296,12 @@ const AuthForm = (props) => {
                   size="small"
                 />
               </Grid>
+              <Typography align="center" style={{ color: 'tomato' }}>
+                {error && error.response && <div> {error.response.data} </div>}
+              </Typography>
+              <Typography align="center">
+                {emailSent ? 'E-mail sent' : null}
+              </Typography>
               <Grid item>
                 <Button
                   id="submit"
@@ -286,7 +321,6 @@ const AuthForm = (props) => {
               </Grid>
             </Grid>
           </Paper>
-          {error && error.response && <div> {error.response.data} </div>}
         </form>
       </div>
     );
