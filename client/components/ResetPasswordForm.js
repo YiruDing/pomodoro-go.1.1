@@ -1,9 +1,7 @@
-/* eslint jsx-quotes: "off" */
-/* eslint no-console: "off" */
-
 import React from 'react';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, Paper, Grid, Typography } from '@material-ui/core';
 import axios from 'axios';
+import history from '../history';
 
 // code source/inspiration:
 // https://github.com/paigen11/mysql-registration-passport
@@ -16,9 +14,11 @@ class ResetPasswordForm extends React.Component {
     this.state = {
       email: '',
       password: '',
+      reenterPassword: '',
       updated: false,
       isLoading: true,
       error: false,
+      errorMessage: '',
     };
 
     this.onChange = this.onChange.bind(this);
@@ -34,6 +34,7 @@ class ResetPasswordForm extends React.Component {
           resetToken,
         },
       });
+      console.log(response);
       if (response.data.message === 'password link accepted') {
         this.setState({
           email: response.data.email,
@@ -61,11 +62,17 @@ class ResetPasswordForm extends React.Component {
 
   async onSubmit(ev) {
     ev.preventDefault();
+    if (password.value !== reenterPassword.value) {
+      this.setState({ errorMessage: 'Passwords do not match' });
+      return;
+    }
     await this.updatePassword();
     this.setState({
       email: '',
       password: '',
+      reenterPassword: '',
     });
+    console.log('submit button clicked');
   }
 
   async updatePassword() {
@@ -74,7 +81,6 @@ class ResetPasswordForm extends React.Component {
         email: this.state.email,
         password: this.state.password,
       });
-      console.log(response);
       if (response.data.message === 'Password successfully updated!') {
         this.setState({
           updated: true,
@@ -93,8 +99,15 @@ class ResetPasswordForm extends React.Component {
 
   render() {
     const { onChange, onSubmit } = this;
-    const { password, error, isLoading, updated } = this.state;
-
+    const {
+      password,
+      error,
+      isLoading,
+      updated,
+      reenterPassword,
+      errorMessage,
+    } = this.state;
+    console.log(password, reenterPassword);
     if (error) {
       return (
         <div>
@@ -112,29 +125,85 @@ class ResetPasswordForm extends React.Component {
         </div>
       );
     }
+    if (updated) {
+      return (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Paper
+            style={{
+              padding: 10,
+              width: '25rem',
+              marginTop: '10rem',
+            }}
+          >
+            {updated && 'Success! Please try logging in again.'}
+          </Paper>
+        </div>
+      );
+    }
     return (
       <div>
-        {updated && 'Success! Please try logging in again.'}
-
-        <form onSubmit={onSubmit} autoComplete="off">
-          <TextField
-            id="password"
-            required={true}
-            label="password"
-            type="password"
-            name="password"
-            value={password}
-            onChange={onChange}
-          />
-          <Button
-            variant="contained"
-            type="submit"
-            color="primary"
-            style={{ marginTop: '1rem' }}
-            value="Submit"
+        <form
+          onSubmit={onSubmit}
+          autoComplete="off"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Paper
+            style={{
+              padding: 10,
+              width: '25rem',
+              marginTop: '10rem',
+            }}
           >
-            Update Password
-          </Button>
+            {updated && 'Success! Please try logging in again.'}
+            <Grid container direction="column" alignItems="center">
+              <TextField
+                id="password"
+                required={true}
+                label="Password"
+                type="password"
+                name="password"
+                value={password}
+                onChange={onChange}
+              />
+              <TextField
+                id="reenterPassword"
+                required={true}
+                label="Re-enter Password"
+                type="password"
+                name="reenterPassword"
+                value={reenterPassword}
+                onChange={onChange}
+              />
+              {errorMessage?.length ? (
+                <Typography
+                  style={{
+                    color: 'tomato',
+                  }}
+                >
+                  {errorMessage}
+                </Typography>
+              ) : null}
+              <Button
+                variant="contained"
+                type="submit"
+                color="primary"
+                style={{ marginTop: '1rem' }}
+                value="Submit"
+              >
+                Update Password
+              </Button>
+            </Grid>
+          </Paper>
         </form>
       </div>
     );
