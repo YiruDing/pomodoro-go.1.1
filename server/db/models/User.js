@@ -103,7 +103,6 @@ User.findByToken = async function (token, method = null) {
     let user = await User.findByPk(id);
     if (!user) {
       console.log('no user from jwt');
-      throw 'nooo';
     }
     return user;
   } catch (ex) {
