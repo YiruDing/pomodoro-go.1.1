@@ -1,7 +1,7 @@
 {
   "name": "pomodoro_go",
   "version": "2.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "Pomodoro-Go is an App/Chrome Extension inspired by the pomdoro technique, also known as tomato timer. Pomdoro-Go helps boost productivity by allowing you to create focus sessions for studying, working, reading or meditating, set specific sites to block and track previous sessions using interactive charts and graphs. Also, you can connect to your spotify account and listen to your playlists or one of our recommended playlists. Share what you've achieved with your friends, and make work a more interesting experience!",
   "main": "index.js",
   "engines": {
     "node": "14.15.4"
