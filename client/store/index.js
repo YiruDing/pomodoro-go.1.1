@@ -39,14 +39,12 @@ const reducer = combineReducers({
   allUsers: allUsersReducer,
   newFriendRequest: newFriendRequestReducer,
 });
-
-const middleware = composeWithDevTools(
-  applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
-);
-let store;
+let middleware = applyMiddleware(thunkMiddleware);
 if (process.env.API_URL.includes('localhost')) {
-  store = createStore(reducer, middleware);
-} else store = createStore(reducer);
-
+  middleware = composeWithDevTools(
+    applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
+  );
+}
+const store = createStore(reducer, middleware);
 export default store;
 export * from './auth';
