@@ -18,7 +18,7 @@ const SpotifyControls = (props) => {
       <IconButton aria-label="previous" onClick={() => playPrevious(props)}>
         {theme.direction === 'rtl' ? <SkipNextIcon /> : <SkipPreviousIcon />}
       </IconButton>
-      <IconButton aria-label="play/pause" onClick={(props) => playStart(props)}>
+      <IconButton aria-label="play/pause" onClick={() => playStart(props)}>
         {!props.currPlayback.is_playing ? (
           <PlayArrowIcon className={playIcon} />
         ) : (

@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import TimerInput from './TimerInput';
 import GoalSelector from './GoalSelector';
 import { TimerContext } from './CreateSession';
 import { SessionContext } from '../../app';
+import { removeSession } from '../../store/sessions';
 
 const useStyles = makeStyles(() => {
   return {
@@ -56,6 +57,7 @@ const FocusConfig = (props) => {
     setHours,
     setMinutes,
     setSeconds,
+    sessionTime,
     setSessionTime,
   } = useContext(TimerContext);
   const classes = useStyles();
@@ -74,11 +76,14 @@ const FocusConfig = (props) => {
       setSessionTime(convertToMilliseconds());
       localStorage.setItem('sessionTime', convertToMilliseconds());
     }
+  }, [seconds, minutes, hours]);
+
+  useEffect(() => {
     const session = JSON.parse(localStorage.getItem('currentSession'));
-    if (session?.status === 'Done') {
+    if (session?.status === 'Ongoing' && !sessionTime) {
       localStorage.setItem('currentSession', null);
     }
-  }, [seconds, minutes, hours]);
+  }, []);
   return (
     <Paper className={classes.container} elevation={10}>
       <Grid

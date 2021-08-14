@@ -34,7 +34,7 @@ const App = (props) => {
     ) {
       props.endSession(sessionFromStorage.id, true);
     }
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     if (!sessionTime && currentSession) {
