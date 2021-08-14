@@ -20,20 +20,26 @@ const Intro = () => {
                 3000,
               ]}
               loop={2}
-              wrapper='h3'
+              wrapper="h3"
             />
             <Typical
               steps={['Brought to you by these lovely folks 👉', 5000]}
               wrapper="p"
             />
-            <Button variant='outlined' color='primary' target='_blank' rel='noreferrer' href='https://github.com/2101-Warriors/pomodoro-go'>
+            <Button
+              variant="outlined"
+              color="primary"
+              target="_blank"
+              rel="noreferrer"
+              href="https://github.com/2101-Warriors/pomodoro-go.1.1"
+            >
               Link to repo
             </Button>
           </div>
         </div>
-        <div className='holes hole-top'></div>
-        <div className='holes hole-middle'></div>
-        <div className='holes hole-bottom'></div>
+        <div className="holes hole-top"></div>
+        <div className="holes hole-middle"></div>
+        <div className="holes hole-bottom"></div>
       </div>
       <TeamProfile />
     </div>
