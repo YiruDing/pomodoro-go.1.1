@@ -1,10 +1,15 @@
 import React from 'react';
-import { Fade, Grid, Typography, Button } from '@material-ui/core';
+import { Fade, Grid, Typography, Button, Paper } from '@material-ui/core';
 const EndSessionWarning = (props) => {
   return (
     <Fade in={props.open}>
-      <div className={props.paperStyle}>
-        <Grid container direction="column" alignItems="center">
+      <Paper className={props.paperStyle}>
+        <Grid
+          container
+          direction="column"
+          alignItems="center"
+          style={{ padding: 25 }}
+        >
           <Grid item>
             <Typography
               color="textPrimary"
@@ -41,7 +46,7 @@ const EndSessionWarning = (props) => {
             </Button>
           </Grid>
         </Grid>
-      </div>
+      </Paper>
     </Fade>
   );
 };
