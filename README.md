@@ -89,7 +89,7 @@ To get a local copy up and running follow these simple steps.
 
 2.  Click Load unpacked and select the public folder in your cloned repo
 
-        <img src='public/assets/step3.png' width='500px'>
+      <img src='public/assets/step3.png' width='500px'>
 
     <!-- USAGE EXAMPLES -->
 
