@@ -80,11 +80,24 @@ To get a local copy up and running follow these simple steps.
 
 ### Loading extension
 
-1. Navigate to the chrome extenstions
-   <img src="public/assets/step1.png" height="240px" width="240px">
-   <img src="public/assets/step2.png" height="240px" width="240px">
+1.  Navigate to the chrome extenstion dashboard
 
-<!-- USAGE EXAMPLES -->
+    (make sure you toggle on developer mode)
+
+    <img src="public/assets/step1.png" width='500px' >
+    <img src="public/assets/step2.png" width='500px' >
+
+2.  Click Load unpacked and select the public folder in your cloned repo
+
+        <img src='public/assets/step3.png' width='500px'>
+
+    <!-- USAGE EXAMPLES -->
+
+3.  Open new tab
+
+    To test if it worked, open a new tab in your browser. Your new tab window should look like this.
+
+    <img src='public/assets/newtab.png'>
 
 ## Usage
 
