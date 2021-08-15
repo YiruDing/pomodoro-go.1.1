@@ -19,8 +19,6 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
-[![Contributors][contributors-shield]][contributors-url]
-
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
@@ -97,19 +95,30 @@ To get a local copy up and running follow these simple steps.
 
     To test if it worked, open a new tab in your browser. Your new tab window should look like this.
 
-    <img src='public/assets/newtab.png'>
+      <img src='public/assets/newtab.png'>
 
-## Usage
+    <br />
+    <br />
+    <br />
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+## Additional Screenshots
+
+<img src='public/assets/homepage.png'>
+<img src='public/assets/dashboard.png'> <img src='public/assets/blocksites.png'> <img src='public/assets/friends.png'>
 
 <!-- CONTACT -->
 
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email
-
-Project Link: [https://github.com/2101-Warriors/pomodoro-go.1.1](https://github.com/2101-Warriors/pomodoro-go.1.1)
+Felicity Wu - (felicitywuny@gmail.com) - email
+<br />
+Stephan Alas - (stephan.j.alas@gmail.com) - email
+<br />
+Russel McMillan (rfmcmillan@gmail.com) - email
+<br />
+Yiru Ding - (dingyr0925@gmail.com) - email
+<br />
+Project Link: [https://pomodoro-go.herokuapp.com/](https://pomodoro-go.herokuapp.com/)
 
 [contributors-shield]: https://img.shields.io/github/contributors/2101-Warriors/repo.svg?style=for-the-badge
 [contributors-url]: https://https://github.com/2101-Warriors/pomodoro-go.1.1/graphs/contributors
