@@ -58,6 +58,10 @@
 
 To get a local copy up and running follow these simple steps.
 
+## Important
+
+The chrome extension must be loaded in order for the block site and timer alarm features to work.
+
 ### Prerequisites
 
 - npm
