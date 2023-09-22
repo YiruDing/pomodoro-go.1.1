@@ -29,10 +29,7 @@
   //   "matches": ["*://pomodoro-go.herokuapp.com/*", "*://localhost/*"]
   // },
   "externally_connectable": {
-    "matches": [
-      "*://https://pomo-h3kf.onrender.com/*",
-      "*://host.docker.internal/*"
-    ]
+    "matches": ["*://https://pomo-h3kf.onrender.com/*", "*://localhost/*"]
   },
   "oauth2": {
     "client_id": "811227993938-bdnup0onkbhf33rejoirhia20j2kf51r.apps.googleusercontent.com",

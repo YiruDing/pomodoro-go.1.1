@@ -214,6 +214,7 @@ const background = {
 
               chrome.tabs.update(tabId, {
                 // url: 'https://pomodoro-go-2101.herokuapp.com/uhoh',
+                url: 'https://pomo-h3kf.onrender.com',
                 url: sync['API_URL'] + '/uhoh',
               }); // hard-code it to production url atm instead of 'http://localhost:8080/uhoh'
             }
@@ -255,7 +256,7 @@ const background = {
       let appInTabs = false;
       allTabs.forEach((tab) => {
         if (
-          tab.url.includes('pomodoro-go.heroku') ||
+          // tab.url.includes('pomodoro-go.heroku') ||
           tab.url.includes('localhost') || tab.url.includes('https://pomo-h3kf.onrender.com')
         ) {
           appInTabs = true;
