@@ -256,7 +256,7 @@ const background = {
       allTabs.forEach((tab) => {
         if (
           tab.url.includes('pomodoro-go.heroku') ||
-          tab.url.includes('localhost')
+          tab.url.includes('localhost') || tab.url.includes('https://pomo-h3kf.onrender.com')
         ) {
           appInTabs = true;
         }

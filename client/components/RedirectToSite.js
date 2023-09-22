@@ -14,13 +14,25 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+// const RedirectToSite = () => {
+//   const classes = useStyles();
+//   return (
+//     <div className={classes.background}>
+//       <a href="https://pomodoro-go.herokuapp.com">
+//         <Button className={classes.text}>
+//           Click to navigate to site pomodoro-go.herokuapp.com
+//         </Button>
+//       </a>
+//     </div>
+//   );
+// };
 const RedirectToSite = () => {
   const classes = useStyles();
   return (
     <div className={classes.background}>
-      <a href="https://pomodoro-go.herokuapp.com">
+      <a href="https://pomo-h3kf.onrender.com">
         <Button className={classes.text}>
-          Click to navigate to site pomodoro-go.herokuapp.com
+          Click to navigate to site https://pomo-h3kf.onrender.com
         </Button>
       </a>
     </div>
