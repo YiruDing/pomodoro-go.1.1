@@ -48,7 +48,7 @@
     "jwt-simple": "^0.5.6",
     "morgan": "^1.9.1",
     "nodemailer": "^6.6.3",
-    "pg": "^8.5.1",
+    "pg": "^8.11.3",
     "prop-types": "^15.7.2",
     "query-string": "^7.0.0",
     "rc-progress": "^3.1.4",
